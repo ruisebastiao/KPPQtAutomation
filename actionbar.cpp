@@ -26,8 +26,9 @@ ActionBar::ActionBar(QWidget *parent) : QWidget(parent) {
 
     // App Icon and Up Button
     appIcon=new QToolButton(this);
-    QIcon myicon=QIcon(":/icons/previous_item");
+    QIcon myicon=QIcon(":/icons/autom");
     appIcon->setIcon(myicon);
+    //appIcon->setVisible(false);
     appIcon->setAutoRaise(true);
     appIcon->setFocusPolicy(Qt::NoFocus);
     layout->addWidget(appIcon);
@@ -37,7 +38,7 @@ ActionBar::ActionBar(QWidget *parent) : QWidget(parent) {
     viewControl=new QToolButton(this);
 
     viewControl->setText("Sem projeto");
-
+    viewControl->setVisible(false);
     viewControl->setAutoRaise(true);
     viewControl->setFocusPolicy(Qt::NoFocus);
     viewControl->setPopupMode(QToolButton::InstantPopup);
@@ -49,6 +50,7 @@ ActionBar::ActionBar(QWidget *parent) : QWidget(parent) {
                 "QMenu::item {padding: 0.3em 1.5em 0.3em 1.5em; border: 1px solid transparent;}"
                 "QMenu::item::selected {border-color: black}");
     layout->addWidget(viewControl);
+
 
     // Spacer
     layout->addStretch();

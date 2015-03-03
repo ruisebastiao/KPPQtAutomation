@@ -16,7 +16,7 @@ Description
         QStackedWidget itself.
 */
 
-class  SlidingStackedWidget : public QStackedWidget
+class SlidingStackedWidget : public QStackedWidget
 {
         Q_OBJECT
 
@@ -39,9 +39,7 @@ public:
 
 
         //! The Constructor and Destructor
-        SlidingStackedWidget(QWidget *parent=0);
-        bool event(QEvent *event);
-
+        SlidingStackedWidget(QWidget *parent);
         ~SlidingStackedWidget(void);
 
 
@@ -53,7 +51,7 @@ public slots:
         void setWrap(bool wrap);    //wrapping is related to slideInNext/Prev;it defines the behaviour when reaching last/first page
 
         //! The Animation / Page Change API
-        void slideInNext(int next=-1);
+        void slideInNext(int next);
         void slideInPrev(int next);
         void slideIn(SlidingStackedWidget::t_SwipeDirection SwipeDirection);
         void slideInIdx(int idx, enum t_direction direction=AUTOMATIC);
@@ -71,7 +69,7 @@ protected:
         //! this is used for internal purposes in the class engine
         void slideInWgt(QWidget * widget, enum t_direction direction=AUTOMATIC);
 
-        //QWidget *m_mainwindow;
+        QWidget *m_mainwindow;
 
         int m_speed;
         enum QEasingCurve::Type m_animationtype;
@@ -83,17 +81,15 @@ protected:
         bool m_active;
 
         QList<QWidget*> blockedPageList;
-       // bool event(QEvent *event);
+        bool event(QEvent *event);
         //void childEvent(QChildEvent *event);
-        //bool eventFilter(QObject *, QEvent *);        
+        //bool eventFilter(QObject *, QEvent *);
 
 private:
-        bool gestureEvent(QGestureEvent *event);
-        //bool OnGestureEvent(QGestureEvent* pEvent);
-        //bool OnSwipeGesture(QSwipeGesture* pSwipe);
+        bool OnGestureEvent(QGestureEvent* pEvent);
+        bool OnSwipeGesture(QSwipeGesture* pSwipe);
 
 
-        bool swipeTriggered(QSwipeGesture *pSwipe);
 };
 
 

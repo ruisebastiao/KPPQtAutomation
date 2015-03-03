@@ -1,7 +1,7 @@
 #include "configurationswidget.h"
 #include "ui_configurationswidget.h"
 #include <QFileDialog>
-#include "idseventsthandler.h"
+#include "cameras/ids/idscamera.h"
 #include "qexception.h"
 
 #include "qdesktopwidget.h"
@@ -40,13 +40,11 @@ ConfigurationsWidget::ConfigurationsWidget(QWidget *parent) :
     ui->ProjectsPage->setDisplayed(true);
     ui->HardwarePage->setDisplayed(true);
 
-
+    m_state= Visible;
 
     ui->stackedWidget->setCurrentIndex(1);
 
-    IDSCameraInfo *idscamera=Settings::AppSettings->Hardware()->idsCameraInfo();
-
-
+  /*  IDSCameraInfo *idscamera=Settings::AppSettings->Hardware()->idsCameraInfo();
     connect(ui->combo_idscameras,SIGNAL(currentIndexChanged(int)),this,SLOT(CurrentIndexChanged(int)));
 
     ui->combo_idscameras->setModel(idscamera);
@@ -60,7 +58,7 @@ ConfigurationsWidget::ConfigurationsWidget(QWidget *parent) :
     ui->bt_cont_capture->hide();
 
     ui->bt_initializecam->setChecked(false);
-    //ui->check_morecameraoptions->setVisible(false);
+    */
 
     ui->list_req->connect(ui->list_req,SIGNAL(selectionChangedSignal(QItemSelection,QItemSelection)),this,SLOT(selectionChanged(QItemSelection,QItemSelection)));
     ui->bt_removereq->setVisible(false);

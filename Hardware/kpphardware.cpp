@@ -10,22 +10,18 @@ KPPHardware::KPPHardware(QObject *parent):
     QObject(parent)
 {
 
-
-
     //IDS Cameras
-    m_idsCameraInfo= new IDSCameraInfo(this);
+    //m_idsCameraInfo= new IDSCameraInfo(this);
 
 }
-
-IDSCameraInfo *KPPHardware::idsCameraInfo() const
+/*
+CameraInfo *KPPHardware::idsCameraInfo() const
 {
-
-
 
     return  m_idsCameraInfo;
 
 }
-
+*/
 
 
 

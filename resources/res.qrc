@@ -13,6 +13,8 @@
         <file alias="settings">icons/ic_action_settings.png</file>
         <file alias="cancel">icons/ic_action_cancel.png</file>
         <file alias="next_item">icons/ic_action_next_item.png</file>
+        <file alias="user_lock">icons/lock.png</file>
+        <file alias="autom">icons/autom.png</file>
     </qresource>
     <qresource prefix="/">
         <file>styles/style_dark.qss</file>

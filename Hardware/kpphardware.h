@@ -3,7 +3,7 @@
 
 #include "QImage"
 #include <QObject>
-#include "idscamerainfo.h"
+#include "cameras/ids/idscamera.h"
 
 
 
@@ -17,11 +17,11 @@ public:
     // QList<CameraInfo> *getcamerasInfo() const;
 
 
-    IDS::IDSCameraInfo *idsCameraInfo() const;
+    //IDS::IDSCameraInfo *idsCameraInfo() const;
     //void setIdsCameraInfo(IDSCameraInfo *idsCameraInfo);
 
 private:
-    IDS::IDSCameraInfo* m_idsCameraInfo;
+    //IDS::IDSCameraInfo* m_idsCameraInfo;
 signals:
 
 public slots:

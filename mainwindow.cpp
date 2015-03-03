@@ -8,10 +8,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    if(QTouchDevice::devices().count()==0){
+/*    if(QTouchDevice::devices().count()==0){
         QGestureRecognizer* pRecognizer = new SwipeGestureRecognizer();
         grabGesture(QGestureRecognizer::registerRecognizer(pRecognizer));
     }
+*/
 
     ui->actionlayout->setMargin(0);
     ui->actionlayout->setSizeConstraint(QLayout::SetNoConstraint);
@@ -36,8 +37,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->actionlayout->addWidget(actionBar);
 
-    visionmodule= new VisionWindow(this);
-    ui->modulelayout->addWidget(visionmodule);
+    //visionmodule= new VisionWindow(this);
+    //ui->modulelayout->addWidget(visionmodule);
     //connect(Settings::AppSettings->Projects(),SIGNAL(Loaded(QObject*)),this,SLOT(LoadDone(QObject*)));
 
 

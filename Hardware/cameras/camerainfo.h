@@ -3,8 +3,6 @@
 
 #include "QAbstractListModel"
 
-namespace IDS {
-
 
 
 class CameraInfo:public QAbstractListModel
@@ -20,5 +18,5 @@ private:
 
 
 };
-}
+
 #endif // CAMERAINFO_H

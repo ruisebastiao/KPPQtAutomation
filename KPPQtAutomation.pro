@@ -20,13 +20,16 @@ OBJECTS_DIR = objs
 SOURCES += main.cpp\
         mainwindow.cpp \
     actionbar.cpp \
-    menustyle.cpp
+    menustyle.cpp \
+    applicationsettings.cpp
 
 HEADERS  += mainwindow.h \
     actionbar.h \
-    menustyle.h
+    menustyle.h \
+    applicationsettings.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    applicationsettings.ui
 
 
 RESOURCES += \

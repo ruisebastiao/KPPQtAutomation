@@ -1,21 +1,18 @@
 #include "SlidingStackedWidget.h"
-#include "slidewidget.h"
+#include "swipegesturerecognizer.h"
+#include <slidewidget.h>
 #include <QDebug>
-#include "typeinfo"
-#include "kppcommon.h"
-
-
 
 SlidingStackedWidget::SlidingStackedWidget(QWidget *parent)
     : QStackedWidget(parent)
 {
-//    if (parent!=0) {
-//            m_mainwindow=parent;
-//        }
-//        else {
-//            //m_mainwindow=this;
-//            qDebug()<<"ATTENTION: untested mainwindow case !";
-//        }
+    if (parent!=0) {
+            m_mainwindow=parent;
+        }
+        else {
+            m_mainwindow=this;
+            qDebug()<<"ATTENTION: untested mainwindow case !";
+        }
         //parent should not be 0; not tested for any other case yet !!
 #ifdef Q_OS_SYMBIAN
 #ifndef __S60_50__
@@ -32,68 +29,24 @@ SlidingStackedWidget::SlidingStackedWidget(QWidget *parent)
         m_wrap=false;
         m_pnow=QPoint(0,0);
         m_active=false;
-        //setAttribute( Qt::WA_TransparentForMouseEvents );
         //installEventFilter(this);
-       // QStackedWidget::grabGesture(Qt::SwipeGesture);
-        //foreach (Qt::GestureType gesture, gestures)
-          //  grabGesture(gesture);
         grabGesture(Qt::SwipeGesture);
-        setAttribute(Qt::WA_AcceptTouchEvents,true);
 
-
-
+        QGestureRecognizer* pRecognizer = new SwipeGestureRecognizer();
+        grabGesture(QGestureRecognizer::registerRecognizer(pRecognizer));
 
 
 }
-
-bool SlidingStackedWidget::event(QEvent *event)
-{
-
-    if (event->type() == QEvent::Gesture/*|| event->type()==QEvent::GestureOverride*/){
-
-        if(event->type()==QEvent::GestureOverride)
-            event->setAccepted(true);
-
-        return gestureEvent(static_cast<QGestureEvent*>(event));
-
-    }
-   // event->ignore();
-
-    return QStackedWidget::event(event);
-}
-
-bool SlidingStackedWidget::gestureEvent(QGestureEvent *event)
- {
-
-
-
-     if (QGesture *swipe = event->gesture(Qt::SwipeGesture)){
-        swipeTriggered(static_cast<QSwipeGesture *>(swipe));
-
-
-
-     }
-
-
-     return true;
- }
 
 
 bool
-SlidingStackedWidget::swipeTriggered(QSwipeGesture* pSwipe)
+SlidingStackedWidget::OnSwipeGesture(QSwipeGesture* pSwipe)
 {
-
-
-//    int index = QObject::staticQtMetaObject.indexOfEnumerator("GestureState");
-//    QMetaEnum metaEnum = QObject::staticQtMetaObject.enumerator(index);
-//    QString temp= metaEnum.valueToKey(pSwipe->state());
-
-//    qDebug()<<"SlidingStackedWidget state:"<<temp;
-
+      // Do something as result of the gesture
     if (pSwipe->state() == Qt::GestureFinished) {
 
         qreal  swipeangle=pSwipe->swipeAngle();
-             //qDebug()<<"Angle:"<<pSwipe->swipeAngle();
+             qDebug()<<"Angle:"<<pSwipe->swipeAngle();
             if (pSwipe->horizontalDirection() == QSwipeGesture::Left &&
                     (swipeangle>150 && swipeangle<210)){
                 //goPrevImage();
@@ -103,27 +56,74 @@ SlidingStackedWidget::swipeTriggered(QSwipeGesture* pSwipe)
                     ( (swipeangle>=0 && swipeangle<15) || (swipeangle>275 && swipeangle<=360))){
                 slideInPrev(-1);
             }
-            else{
-
-                return false;
+            else if(pSwipe->verticalDirection() == QSwipeGesture::Down ){
+                    //( (swipeangle>=0 && swipeangle<15) || (swipeangle>275 && swipeangle<=360))){
+                if (swipeangle>=0) {
+                    return true;
+                }
             }
-
         return true;
         }
    return false;
 }
 
+bool
+SlidingStackedWidget::OnGestureEvent(QGestureEvent* pEvent)
+{
+   QGesture *pSwipe = pEvent->gesture(Qt::SwipeGesture);
+   if (pSwipe != NULL) {
+      return OnSwipeGesture(static_cast<QSwipeGesture*>(pSwipe));
+   } else {
+      qDebug("Unexpected gesture detected. We only grab Qt::SwipeGesture ");
+      return QWidget::event(pEvent);
+   }
+}
+
+//QString EnumSocketTypeToString(int value)
+//{
+//    QMetaObject obj = QChildEvent::staticMetaObject;
+//    QMetaEnum en = obj.enumerator(0);
+//    return QLatin1String(en.valueToKey(value));
+//}
+
+//bool SlidingStackedWidget::eventFilter( QObject* target, QEvent* e)
+//{
+//    switch (e->type())
+//    {
+//    case QEvent::ChildAdded:
+//        {
+//            QChildEvent* ce = (QChildEvent*)e;
+//            ce->child()->installEventFilter(this);
+//        }
+//        break;
+
+//    case QEvent::ChildRemoved:
+//        {
+//            QChildEvent* ce = (QChildEvent*)e;
+//            ce->child()->removeEventFilter(this);
+//        }
+//        break;
+//    }
+
+//    return QWidget::eventFilter(target, e);
+//}
+
+//void SlidingStackedWidget::childEvent(QChildEvent *event){
+//   // qDebug()<<"Child :"<<event->child()->objectName();
+//    //qDebug()<<"Child event:"<<EnumSocketTypeToString(event->type());
+
+//}
 
 
 
-//bool SlidingStackedWidget::event(QEvent *event)
-// {
-//    if (event->type() == QEvent::Gesture) {
-//          return OnGestureEvent(static_cast<QGestureEvent*>(event));
-//       }
+bool SlidingStackedWidget::event(QEvent *event)
+ {
+    if (event->type() == QEvent::Gesture ||event->type() == QEvent::GestureOverride) {
+          return OnGestureEvent(static_cast<QGestureEvent*>(event));
+       }
 
-//     return QWidget::event(event);
-// }
+     return QWidget::event(event);
+ }
 
 
 
@@ -146,7 +146,7 @@ void SlidingStackedWidget::setWrap(bool wrap) {
         m_wrap=wrap;
 }
 
-void SlidingStackedWidget::slideInNext(int next) {
+void SlidingStackedWidget::slideInNext(int next=-1) {
 
         int now=currentIndex();
         if (next!=-1) {
@@ -154,14 +154,9 @@ void SlidingStackedWidget::slideInNext(int next) {
         }
         if (m_wrap||(now<count()-1)){
                 // count is inherit from QStackedWidget
-            QWidget* next_widget=widget(now+1);
-            SlideWidget *widg=qobject_cast<SlideWidget*>(next_widget);
+            SlideWidget *widg=qobject_cast<SlideWidget*>(widget(now+1));
 
-            if(widg==0){
 
-                slideInNext(now+1);
-                return;
-            }
 
             if (widg->Displayed()==false) {
                 slideInNext(now+1);
