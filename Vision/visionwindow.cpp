@@ -7,30 +7,30 @@ VisionWindow::VisionWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    new Settings(this);
-    if(!(Settings::AppSettings->Load(qApp->applicationDirPath().append("/settings.cfg")))){
-        Settings::AppSettings->Save();
+    settings=new VisionSettings(this);
+    if(!(settings->Load(qApp->applicationDirPath().append("/settings.cfg")))){
+        settings->Save();
     }
 
-    if(!Settings::AppSettings->Projects()->Load(Settings::AppSettings->ProjectsFilePath())){
-        Settings::AppSettings->Projects()->Save();
+    if(!settings->Projects()->Load(settings->ProjectsFilePath())){
+        settings->Projects()->Save();
     }
 
-    ui->treeWidget->AddVisionProjectsModel(Settings::AppSettings->Projects());
+    ui->treeWidget->AddVisionProjectsModel(settings->Projects());
 
     //Settings::AppSettings->Projects()->AddItem("asd");
 
 
-    configs= new ConfigurationsWidget (this);
+    configs= new ConfigurationsWidget (this,settings);
 
 
 
     connect(ui->treeWidget,SIGNAL(ListSelectionChanged(QObject*)),this,SLOT(VisionTreeListSelectionChanged(QObject*)));
 
-    Settings::mainwidget=this;
+    VisionSettings::mainwidget=this;
 
 
-    foreach (KPPVision *project, Settings::AppSettings->Projects()->getList()) {
+    foreach (KPPVision *project, settings->Projects()->getList()) {
         foreach (Request *request, project->Requests()->getList()) {
             connect(request->Inspections(),SIGNAL(rowsInserted(QModelIndex,int,int)),this,SLOT(InspectionInserted(QModelIndex,int,int)));
             foreach (Inspection *inspection, request->Inspections()->getList()) {

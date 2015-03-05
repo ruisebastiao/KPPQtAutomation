@@ -29,7 +29,7 @@ private slots:
 
 private:
     Ui::VisionWindow *ui;
-
+    VisionSettings *settings;
     ConfigurationsWidget *configs;
     KPPVision *vision;
 };

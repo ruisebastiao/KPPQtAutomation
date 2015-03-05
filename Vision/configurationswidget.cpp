@@ -11,8 +11,9 @@ using namespace IDS;
 
 
 
-ConfigurationsWidget::ConfigurationsWidget(QWidget *parent) :
+ConfigurationsWidget::ConfigurationsWidget(QWidget *parent, VisionSettings *settings) :
     QWidget(parent),
+    m_settings(settings),
     ui(new Ui::ConfigurationsWidget)
 {
 
@@ -34,9 +35,9 @@ ConfigurationsWidget::ConfigurationsWidget(QWidget *parent) :
     hide();
 
 
-    ui->edit_projsloc->setText(Settings::AppSettings->ProjectsFilePath());
+    ui->edit_projsloc->setText(settings->ProjectsFilePath());
     ui->list_projects->connect(ui->list_projects,SIGNAL(selectionChangedSignal(QItemSelection,QItemSelection)),this,SLOT(selectionChanged(QItemSelection,QItemSelection)));
-    ui->list_projects->setModel(Settings::AppSettings->Projects());
+    ui->list_projects->setModel(settings->Projects());
     ui->ProjectsPage->setDisplayed(true);
     ui->HardwarePage->setDisplayed(true);
 
@@ -191,12 +192,12 @@ void ConfigurationsWidget::on_bt_select_clicked()
 
 void ConfigurationsWidget::on_bt_save_settings_clicked()
 {
-    Settings::AppSettings->setProjectsFilePath(ui->edit_projsloc->text());
+    m_settings->setProjectsFilePath(ui->edit_projsloc->text());
 
-    Settings::AppSettings->Save();
+    m_settings->Save();
 
 
-    Settings::AppSettings->Projects()->Save();
+    m_settings->Projects()->Save();
 
 
     //    ui->frame_5->layout()->addWidget(ui->stackedWidget);
@@ -211,16 +212,16 @@ void ConfigurationsWidget::on_bt_save_settings_clicked()
 void ConfigurationsWidget::on_bt_addproj_clicked()
 {
     QString projectname=tr("Projecto 1");
-    for (int var = 0; var < Settings::AppSettings->Projects()->rowCount(QModelIndex()); var++) {
+    for (int var = 0; var < m_settings->Projects()->rowCount(QModelIndex()); var++) {
         QString newprojname=tr("Projecto ").append("%1").arg(var+2);
 
-        if(!Settings::AppSettings->Projects()->getItemsNameList().contains(newprojname)){
+        if(!m_settings->Projects()->getItemsNameList().contains(newprojname)){
             projectname=newprojname;
             break;
         }
     }
 
-    Settings::AppSettings->Projects()->AddItem(projectname);
+    m_settings->Projects()->AddItem(projectname);
 }
 
 void ConfigurationsWidget::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -231,7 +232,7 @@ void ConfigurationsWidget::selectionChanged(const QItemSelection &selected, cons
         QString projectname="";
         if (selectedlist.count()>0) {
             projectname=selectedlist.at(0).data().toString();
-            setSelectedProject(Settings::AppSettings->Projects()->getItemByName(projectname));
+            setSelectedProject(m_settings->Projects()->getItemByName(projectname));
         }
         else
             setSelectedProject(0);
@@ -293,7 +294,7 @@ void ConfigurationsWidget::on_bt_removeproj_clicked()
     QModelIndexList selectedlist= ui->list_projects->selectionModel()->selectedRows();
     if(selectedlist.count()>0){
         KPPVision* project=selectedlist.at(0).data(Qt::UserRole).value<KPPVision*>();
-        Settings::AppSettings->Projects()->removeItem(project);
+        m_settings->Projects()->removeItem(project);
     }
 
 
@@ -311,7 +312,7 @@ void ConfigurationsWidget::setSelectedProject(KPPVision *value)
 
     if (m_SelectedProject!=0) {
 
-        ui->list_projects->setCurrentIndex(Settings::AppSettings->Projects()->getItemModelIndex(value));
+        ui->list_projects->setCurrentIndex(m_settings->Projects()->getItemModelIndex(value));
 
         ui->requestspage->setDisplayed(true);
         ui->bt_removeproj->setVisible(true);

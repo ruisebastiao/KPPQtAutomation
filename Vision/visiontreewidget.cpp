@@ -2,7 +2,7 @@
 #include "QBoxLayout"
 #include "QDebug"
 #include "kppvision.h"
-#include "settings.h"
+#include "visionsettings.h"
 #include "kppadjustablelistview.h"
 #include "kppanimatedframe.h"
 #include "qapplication.h"
@@ -158,12 +158,12 @@ void VisionTreeWidget::ListItemPressed(QModelIndex e)
 
     if(sender()->objectName()==list_Requests->objectName()){
         QRect wt=list_Requests->visualRect(e);
-        QRect mappedrect=QRect(list_Requests->mapTo(parentWidget,wt.topLeft()),list_Requests->mapTo(Settings::mainwidget,wt.bottomRight()));
+        QRect mappedrect=QRect(list_Requests->mapTo(parentWidget,wt.topLeft()),list_Requests->mapTo(VisionSettings::mainwidget,wt.bottomRight()));
         m_requestmenu->setAlignmentRect(mappedrect);
     }
     else if(sender()->objectName()==list_Inspections->objectName()){
         QRect wt=list_Inspections->visualRect(e);
-        QRect mappedrect=QRect(list_Inspections->mapTo(parentWidget,wt.topLeft()),list_Inspections->mapTo(Settings::mainwidget,wt.bottomRight()));
+        QRect mappedrect=QRect(list_Inspections->mapTo(parentWidget,wt.topLeft()),list_Inspections->mapTo(VisionSettings::mainwidget,wt.bottomRight()));
         m_inspectionmenu->setAlignmentRect(mappedrect);
     }
 

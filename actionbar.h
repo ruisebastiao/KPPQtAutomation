@@ -139,7 +139,7 @@ private:
     QToolButton* appIcon;
 
     /** The button that contains the title, used for view navigation. */
-    QToolButton* viewControl;
+    QToolButton* viewControl=0;
 
     /** The menu that appears when the user clicks on the title. */
     QMenu* viewMenu;
@@ -159,15 +159,18 @@ private:
     /** Used to control the size of icons in menu items. */
     MenuStyle menuStyle;
 
+
+
 signals:
     /** Emitted when the user clicks on the icon. */
     void up();
     void ActionButtonClicked(QToolButton *buttonClicked);
+    void ActionMenuClicked(QAction* actionmenu);
 
 private slots:
 
+    void MenuActionTriggered();
 
-    /// teste
     void buttonclicked();
 
 

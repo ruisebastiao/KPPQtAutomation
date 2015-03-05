@@ -1,38 +1,43 @@
 
-SOURCES +=Common\kppcommon.cpp \
-        Common/kppeditbox.cpp \
-        Common/kppframe.cpp \
-        Common/kppgestureframe.cpp \
-        Common/kpppushbutton.cpp \
-        Common/slidewidget.cpp \
-        Common/SlidingStackedWidget.cpp \
-        Common/kppadjustablelistview.cpp \
-        Common/kpptreewidgetitem.cpp \
-        Common/kpplineedit.cpp \
-        Common/kpptreepushbutton.cpp \
-        Common/kppanimatedframe.cpp \
-        Common/swipegesturerecognizer.cpp \
-        Common/kppadjustablelistview.cpp \
-        Common/crashhandler.cpp \
-        Common/crashdialog.cpp
+SOURCES +=\
+    $$PWD\kppcommon.cpp \
+    $$PWD/kppeditbox.cpp \
+    $$PWD/kppframe.cpp \
+    $$PWD/kppgestureframe.cpp \
+    $$PWD/kpppushbutton.cpp \
+    $$PWD/slidewidget.cpp \
+    $$PWD/SlidingStackedWidget.cpp \
+    $$PWD/kppadjustablelistview.cpp \
+    $$PWD/kpptreewidgetitem.cpp \
+    $$PWD/kpplineedit.cpp \
+    $$PWD/kpptreepushbutton.cpp \
+    $$PWD/kppanimatedframe.cpp \
+    $$PWD/swipegesturerecognizer.cpp \
+    $$PWD/kppadjustablelistview.cpp \
+    $$PWD/crashhandler.cpp \
+    $$PWD/crashdialog.cpp \
+    $$PWD/moduleslist.cpp
 
-HEADERS += Common/kppcommon.h\
-        Common/kppcommon_global.h \
-        Common/kppeditbox.h \
-        Common/kppframe.h \
-        Common/kppgestureframe.h \
-        Common/kpppushbutton.h \
-        Common/slidewidget.h \
-        Common/SlidingStackedWidget.h \
-        Common/kppadjustablelistview.h \
-        Common/kpptreewidgetitem.h \
-        Common/kpplineedit.h \
-        Common/kpptreepushbutton.h \
-        Common/kppanimatedframe.h \
-        Common/swipegesturerecognizer.h \
-        Common/kppadjustablelistview.h \
-        Common/crashhandler.h \
-        Common/crashdialog.h
+
+HEADERS += \
+    $$PWD/kppcommon.h\
+    $$PWD/kppcommon_global.h \
+    $$PWD/kppeditbox.h \
+    $$PWD/kppframe.h \
+    $$PWD/kppgestureframe.h \
+    $$PWD/kpppushbutton.h \
+    $$PWD/slidewidget.h \
+    $$PWD/SlidingStackedWidget.h \
+    $$PWD/kppadjustablelistview.h \
+    $$PWD/kpptreewidgetitem.h \
+    $$PWD/kpplineedit.h \
+    $$PWD/kpptreepushbutton.h \
+    $$PWD/kppanimatedframe.h \
+    $$PWD/swipegesturerecognizer.h \
+    $$PWD/kppadjustablelistview.h \
+    $$PWD/crashhandler.h \
+    $$PWD/crashdialog.h \
+    $$PWD/moduleslist.h
 
 
 

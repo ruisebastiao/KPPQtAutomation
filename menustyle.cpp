@@ -8,8 +8,8 @@ int MenuStyle::pixelMetric(PixelMetric metric, const QStyleOption* option, const
 
     // Return the size of menu item icons
     switch (metric) {
-        case QStyle::PM_SmallIconSize: return 1.5*em;
-        case QStyle::PM_LargeIconSize: return 3*em;
+        case QStyle::PM_SmallIconSize: return 2.5*em;
+        case QStyle::PM_LargeIconSize: return 2.5*em;
         default: return QProxyStyle::pixelMetric(metric, option, widget);
     }
 }

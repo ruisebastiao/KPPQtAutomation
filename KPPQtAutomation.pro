@@ -15,21 +15,38 @@ UI_DIR = uics
 MOC_DIR = mocs
 OBJECTS_DIR = objs
 
+INCLUDEPATH +=$$PWD/../ExternalLibs/QsLog
+
+DEFINES += QSLOG_IS_SHARED_LIBRARY_IMPORT
+
+LIBS += -L$$PWD/../ExternalLibs/QsLog/build-QsLogShared
+win32 {
+    LIBS += -lQsLog2
+} else {
+    LIBS += -lQsLog
+}
 
 
 SOURCES += main.cpp\
         mainwindow.cpp \
     actionbar.cpp \
     menustyle.cpp \
+    loginwindow.cpp \
+    applicationsettingswindow.cpp \
     applicationsettings.cpp
 
 HEADERS  += mainwindow.h \
     actionbar.h \
     menustyle.h \
+    loginwindow.h \
+    applicationsettingswindow.h \
     applicationsettings.h
 
+
 FORMS    += mainwindow.ui \
-    applicationsettings.ui
+    applicationsettings.ui \
+    loginwindow.ui
+
 
 
 RESOURCES += \
@@ -50,4 +67,4 @@ RESOURCES += \
     error( "Couldn't find the vision.pri file!" )
 }
 
-DISTFILES +=
+#DISTFILES +=

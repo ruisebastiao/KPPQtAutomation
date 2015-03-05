@@ -25,31 +25,69 @@ ActionBar::ActionBar(QWidget *parent) : QWidget(parent) {
     layout->setSizeConstraint(QLayout::SetNoConstraint);
 
     // App Icon and Up Button
-    appIcon=new QToolButton(this);
-    QIcon myicon=QIcon(":/icons/autom");
-    appIcon->setIcon(myicon);
-    //appIcon->setVisible(false);
-    appIcon->setAutoRaise(true);
-    appIcon->setFocusPolicy(Qt::NoFocus);
-    layout->addWidget(appIcon);
-    QWidget::connect(appIcon, SIGNAL( clicked()), this, SLOT(appIconClicked()));
+    {
+        appIcon=new QToolButton(this);
+        QIcon myicon=QIcon(":/icons/kppautom");
+        appIcon->setIcon(myicon);
+        appIcon->setText("Opções");
+        appIcon->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);        
+        //appIcon->setVisible(false);
+        appIcon->setAutoRaise(true);
+        appIcon->setFocusPolicy(Qt::NoFocus);
+        appIcon->setPopupMode(QToolButton::InstantPopup);
 
-    // View Control Button
-    viewControl=new QToolButton(this);
 
-    viewControl->setText("Sem projeto");
-    viewControl->setVisible(false);
-    viewControl->setAutoRaise(true);
-    viewControl->setFocusPolicy(Qt::NoFocus);
-    viewControl->setPopupMode(QToolButton::InstantPopup);
-    viewControl->setToolButtonStyle(Qt::ToolButtonTextOnly);
-    viewControl->setStyleSheet("font:bold; height:1.5em;");
-    viewMenu=new QMenu(this);
-    viewMenu->setStyle(&menuStyle); // needed because the icon size cannot be set by a StyleSheet
-    viewMenu->setStyleSheet(
-                "QMenu::item {padding: 0.3em 1.5em 0.3em 1.5em; border: 1px solid transparent;}"
-                "QMenu::item::selected {border-color: black}");
-    layout->addWidget(viewControl);
+        QMenu* menu=new QMenu(this);
+        menu->setStyle(&menuStyle); // needed because the icon size cannot be set by a StyleSheet
+        menu->setStyleSheet(
+                    "QMenu::item {padding: 1.5em 1.5em 1.5em 1.5em; border: 1px solid transparent;}"
+                    "QMenu::item::selected {border-color: black}");
+
+        {
+            QAction *act=menu->addAction("      Login");
+            act->setObjectName("bt_login");
+            QIcon myicon2=QIcon(":/icons/user_lock");
+            act->setIcon(myicon2);
+            QWidget::connect(act, SIGNAL(triggered()), this, SLOT(MenuActionTriggered()));
+        }
+        {
+            QAction *act=menu->addAction("      Definições");
+            act->setObjectName("bt_config");
+            QIcon myicon2=QIcon(":/icons/config");
+            act->setIcon(myicon2);
+            QWidget::connect(act, SIGNAL(triggered()), this, SLOT(MenuActionTriggered()));
+        }
+        appIcon->setMenu(menu);
+        layout->addWidget(appIcon);
+        QWidget::connect(appIcon, SIGNAL( clicked()), this, SLOT(appIconClicked()));
+    }
+
+    {
+//        // View Control Button
+//        viewControl=new QToolButton(this);
+
+//        viewControl->setText("Opções");
+//        viewControl->setVisible(true);
+//        viewControl->setAutoRaise(true);
+
+
+//        //viewControl->setIcon(myicon);
+
+//        viewControl->setFocusPolicy(Qt::NoFocus);
+//        viewControl->setPopupMode(QToolButton::InstantPopup);
+//        viewControl->setToolButtonStyle(Qt::ToolButtonIconOnly);
+//        viewControl->setStyleSheet("font:bold; height:1.5em;");
+
+//        viewMenu=new QMenu(this);
+//        viewMenu->setStyle(&menuStyle); // needed because the icon size cannot be set by a StyleSheet
+//        viewMenu->setStyleSheet(
+//                    "QMenu::item {padding: 0.3em 1.5em 0.3em 1.5em; border: 1px solid transparent;}"
+//                    "QMenu::item::selected {border-color: black}");
+
+//        layout->addWidget(viewControl);
+
+    }
+
 
 
     // Spacer
@@ -86,6 +124,20 @@ void ActionBar::resizeEvent(QResizeEvent* event) {
     }
 }
 
+void ActionBar::MenuActionTriggered()
+{
+   QObject* sender=QObject::sender();
+   if(sender!=0){
+       QAction *sender_action=(QAction*)sender;
+       if(sender_action!=0){
+           emit ActionMenuClicked(sender_action);
+           if(sender_action->objectName()=="bt_login"){
+
+           }
+       }
+   }
+}
+
 void ActionBar::buttonclicked()
 {
     QToolButton* sender_objec=dynamic_cast<QToolButton*>(sender());
@@ -118,6 +170,7 @@ void ActionBar::setTitle(const QString& title, bool showUpButton) {
 }
 
 void ActionBar::appIconClicked() {
+    //appIcon->menu()->show();
     emit up();
 }
 
@@ -132,7 +185,11 @@ void ActionBar::adjustContent() {
     // Check if all action buttons fit into the available space with text beside icon.
     bool needOverflow=false;
 
-    int space=width() - appIcon->sizeHint().width() - viewControl->sizeHint().width();
+    int space;
+    if(viewControl!=0)
+         space=  width() - appIcon->sizeHint().width() - viewControl->sizeHint().width();
+    else
+        space=  width() - appIcon->sizeHint().width();
 
     for (int i=0; i<buttonActions.size(); i++) {
         QAction* action=buttonActions.at(i);
@@ -153,7 +210,11 @@ void ActionBar::adjustContent() {
 
     // Calculate space available to display action buttons
     overflowMenu->clear();
-    space=width()-pos().x() - appIcon->sizeHint().width() - viewControl->sizeHint().width();
+    if (viewControl==0) {
+        space=width()-pos().x() - appIcon->sizeHint().width();
+    }
+    else
+        space=width()-pos().x() - appIcon->sizeHint().width() - viewControl->sizeHint().width();
     if (needOverflow) {
         space-=overflowButton->sizeHint().width();
     }

@@ -31,7 +31,7 @@ namespace Vision {
 template<class T>
 class KPPVisionList :public QAbstractListModel
 {
-    //Q_OBJECT
+
 public:
     friend class boost::serialization::access;
     friend std::ostream & operator<<(std::ostream &os, const KPPVisionList &sett);

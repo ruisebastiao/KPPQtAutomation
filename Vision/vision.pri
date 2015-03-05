@@ -1,54 +1,54 @@
 
 SOURCES += \
-    vision/kppvision.cpp \
-    vision/inspection.cpp \
-    vision/configurationswidget.cpp \
-    vision/sidewidget.cpp \
-    vision/SizeGripItem.cpp \
-    vision/settings.cpp \
-    vision/visiontreewidget.cpp \
-    vision/kppstyleditemdelegate.cpp \
-    vision/kppvisionlist.cpp \
-    vision/request.cpp \
-    vision/ilistviewitem.cpp \
-    vision/inspectiontreewidget.cpp \
-    vision/capturesource.cpp \
-    vision/imagefilecapture.cpp \
-    vision/requestmenu.cpp \
-    vision/inspectionmenu.cpp \
-    vision/kpproi.cpp \
-    vision/resizableitem.cpp \
-    vision/kppgraphicsview.cpp \
-    vision/kppgraphicsscene.cpp \
-    vision/imageholder.cpp \
-    vision/kppvisionauxfunctions.cpp \
-    vision/visionwindow.cpp
+    $$PWD/kppvision.cpp \
+    $$PWD/inspection.cpp \
+    $$PWD/configurationswidget.cpp \
+    $$PWD/sidewidget.cpp \
+    $$PWD/SizeGripItem.cpp \
+    $$PWD/visiontreewidget.cpp \
+    $$PWD/kppstyleditemdelegate.cpp \
+    $$PWD/kppvisionlist.cpp \
+    $$PWD/request.cpp \
+    $$PWD/ilistviewitem.cpp \
+    $$PWD/inspectiontreewidget.cpp \
+    $$PWD/capturesource.cpp \
+    $$PWD/imagefilecapture.cpp \
+    $$PWD/requestmenu.cpp \
+    $$PWD/inspectionmenu.cpp \
+    $$PWD/kpproi.cpp \
+    $$PWD/resizableitem.cpp \
+    $$PWD/kppgraphicsview.cpp \
+    $$PWD/kppgraphicsscene.cpp \
+    $$PWD/imageholder.cpp \
+    $$PWD/kppvisionauxfunctions.cpp \
+    $$PWD/visionwindow.cpp \
+    $$PWD/visionsettings.cpp
 
 HEADERS += \
-   vision/kppvision.h\
-   vision/inspection.h \
-   vision/configurationswidget.h \
-   vision/sidewidget.h \
-   vision/SizeGripItem.h \
-   vision/settings.h \
-   vision/visiontreewidget.h \
-   vision/kppstyleditemdelegate.h \
-   vision/kppvisionlist.h \
-   vision/request.h \
-   vision/ilistviewitem.h \
-   vision/inspectiontreewidget.h \
-   vision/capturesource.h \
-   vision/imagefilecapture.h \
-   vision/BoostDef.h \
-   vision/requestmenu.h \
-   vision/inspectionmenu.h \
-   vision/kpproi.h \
-   vision/resizableitem.h \
-   vision/kppgraphicsview.h \
-   vision/kppgraphicsscene.h \
-   vision/imageholder.h \
-   vision/kppvisionauxfunctions.h \
-   vision/visionwindow.h
+    $$PWD/kppvision.h\
+    $$PWD/inspection.h \
+    $$PWD/configurationswidget.h \
+    $$PWD/sidewidget.h \
+    $$PWD/SizeGripItem.h \
+    $$PWD/visiontreewidget.h \
+    $$PWD/kppstyleditemdelegate.h \
+    $$PWD/kppvisionlist.h \
+    $$PWD/request.h \
+    $$PWD/ilistviewitem.h \
+    $$PWD/inspectiontreewidget.h \
+    $$PWD/capturesource.h \
+    $$PWD/imagefilecapture.h \
+    $$PWD/BoostDef.h \
+    $$PWD/requestmenu.h \
+    $$PWD/inspectionmenu.h \
+    $$PWD/kpproi.h \
+    $$PWD/resizableitem.h \
+    $$PWD/kppgraphicsview.h \
+    $$PWD/kppgraphicsscene.h \
+    $$PWD/imageholder.h \
+    $$PWD/kppvisionauxfunctions.h \
+    $$PWD/visionwindow.h \
+    $$PWD/visionsettings.h
 
 
 

@@ -1,37 +1,42 @@
 
-#include "settings.h"
-
+#include "visionsettings.h"
+#include "QApplication"
 
 
 
 
 using namespace Vision;
 
-Settings* Settings::AppSettings=0;
-QWidget* Settings::mainwidget=0;
+//VisionSettings* VisionSettings::settings=0;
+QWidget* VisionSettings::mainwidget=0;
 
-Settings::Settings(QObject *parent) :
-    QObject(parent)
+VisionSettings::VisionSettings(QObject *parent,QString settingspath) :
+    QObject(parent),
+    m_ProjectsFilePath(settingspath)
 {
-    m_ProjectsFilePath="No path";
-    AppSettings=this;
+    if (settingspath=="") {
+        m_ProjectsFilePath=QDir(qApp->applicationDirPath()).filePath("vision.cfg");
+    }
+
+    //settings=this;
     m_hardware= new KPPHardware(this);
     m_Projects=new KPPVisionList<KPPVision>(this);
 }
-QString Settings::ProjectsFilePath() const
+
+QString VisionSettings::ProjectsFilePath() const
 {
     return m_ProjectsFilePath;
 }
 
-void Settings::setProjectsFilePath(const QString &ProjectsFilePath)
+void VisionSettings::setProjectsFilePath(const QString &ProjectsFilePath)
 {
     m_ProjectsFilePath = ProjectsFilePath;
 }
-KPPHardware *Settings::Hardware() const
+KPPHardware *VisionSettings::Hardware() const
 {
     return m_hardware;
 }
-KPPVisionList<KPPVision> *Settings::Projects()
+KPPVisionList<KPPVision> *VisionSettings::Projects()
 {
 
     return m_Projects;
@@ -41,7 +46,7 @@ KPPVisionList<KPPVision> *Settings::Projects()
 
 
     template<class Archive>
-    void Settings::serialize(Archive & ar, const unsigned int  file_version ){
+    void VisionSettings::serialize(Archive & ar, const unsigned int  file_version ){
 
                //ar &   BOOST_SERIALIZATION_NVP(m_Projects);
         boost::serialization::split_free(ar,QStringSerializable(BOOST_STRINGIZE(m_ProjectsFilePath),&m_ProjectsFilePath), file_version);
@@ -53,7 +58,7 @@ KPPVisionList<KPPVision> *Settings::Projects()
 
 
 
-bool Settings::Save(QString location){
+bool VisionSettings::Save(QString location){
     // make an archive
     //Settings *settings=this;
         std::ofstream ofs(location.toUtf8().data());
@@ -68,18 +73,18 @@ bool Settings::Save(QString location){
     return true;
 }
 
-bool Settings::Load(){
+bool VisionSettings::Load(){
 
     return Load(m_location);
 }
 
-bool Settings::Save(){
+bool VisionSettings::Save(){
 
     return Save(m_location);
 }
 
 
-bool Settings::Load(QString location){
+bool VisionSettings::Load(QString location){
 
 
     try{

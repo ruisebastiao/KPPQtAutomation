@@ -2,6 +2,7 @@
 #include "ui_crashdialog.h"
 #include "qstringlistmodel.h"
 #include "kppcommon.h"
+#include "applicationsettings.h"
 
 CrashDialog::CrashDialog(QWidget *parent) :
     QDialog(parent),
@@ -13,7 +14,7 @@ CrashDialog::CrashDialog(QWidget *parent) :
     setWindowFlags(Qt::Dialog|Qt::FramelessWindowHint|Qt::WindowTitleHint) ;
    // setWindowFlags(Qt::Dialog) ;
     setModal(true);
-    setStyleSheet(KPPCommon::loadStyleSheet(":/glossy"));
+    setStyleSheet(ApplicationSettings::loadStyleSheet(":/glossy"));
 }
 
 CrashDialog::~CrashDialog()

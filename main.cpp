@@ -1,21 +1,26 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include "qmessagebox.h"
-#include "settings.h"
+//#include "settings.h"
 #include "qstandardpaths.h"
 #include "qdebug.h"
 #include "crashhandler.h"
 #include "kppcommon.h"
-#include <QxtCore/QxtBasicFileLoggerEngine>
-#include <QxtCore/QxtLogger>
-#include <QxtCore/QxtXmlFileLoggerEngine>
+
+//#include <QxtCore/QxtBasicFileLoggerEngine>
+//#include <QxtCore/QxtLogger>
+//#include <QxtCore/QxtXmlFileLoggerEngine>
+
+#include "QsLog.h"
+#include "QsLogDest.h"
+
 #include "qobject.h"
 
 using namespace CrashReport;
 
 //using namespace std;
 
-
+/*
 void setupLogger(QString path="")
 {
     QString loc="";
@@ -41,6 +46,15 @@ void setupLogger(QString path="")
     qxtLog->enableLogLevels("dbg", QxtLogger::AllLevels);
     qxtLog->enableLogLevels("app",  QxtLogger::InfoLevel | QxtLogger::WarningLevel | QxtLogger::ErrorLevel | QxtLogger::CriticalLevel | QxtLogger::FatalLevel | QxtLogger::WriteLevel );
 }
+*/
+
+
+void logFunction(const QString &message, QsLogging::Level level)
+{
+    std::cout << "From log function: " << qPrintable(message) << " " << static_cast<int>(level)
+              << std::endl;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -52,8 +66,26 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    setupLogger();
+   // setupLogger();
 
+    using namespace QsLogging;
+
+    // 1. init the logging mechanism
+    Logger& logger = Logger::instance();
+    logger.setLoggingLevel(QsLogging::TraceLevel);
+    const QString sLogPath(QDir(a.applicationDirPath()).filePath("log.txt"));
+
+    // 2. add two destinations
+    DestinationPtr fileDestination(DestinationFactory::MakeFileDestination(
+      sLogPath, EnableLogRotation, MaxSizeBytes(512), MaxOldLogCount(2)));
+    DestinationPtr debugDestination(DestinationFactory::MakeDebugOutputDestination());
+    DestinationPtr functorDestination(DestinationFactory::MakeFunctorDestination(&logFunction));
+    logger.addDestination(debugDestination);
+    logger.addDestination(fileDestination);
+    logger.addDestination(functorDestination);
+
+    QLOG_INFO() << "_______________________________";
+    QLOG_INFO() << "Program started";
 
 
     QTranslator qtTranslator;
@@ -68,13 +100,13 @@ int main(int argc, char *argv[])
     qApp->installTranslator(translator);
 
 
-   // qxtLog->info()<<translator->tr("Initializing application...");
+    //qxtLog->debug()<<translator->tr("Initializing application...");
 
 
     MainWindow w;
 
 
-    qApp->setStyleSheet(KPPCommon::loadStyleSheet(":/glossy"));
+    qApp->setStyleSheet(ApplicationSettings::loadStyleSheet(":/glossy"));
 
     w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint) ;
 
@@ -88,7 +120,7 @@ int main(int argc, char *argv[])
 
     const int r=a.exec();
 
-
+    QsLogging::Logger::destroyInstance();
 
     return r;
 

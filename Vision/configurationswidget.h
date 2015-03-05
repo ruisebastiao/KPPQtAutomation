@@ -6,7 +6,7 @@
 #include <kpppushbutton.h>
 #include "kppvision.h"
 #include "swipegesturerecognizer.h"
-#include "settings.h"
+#include "visionsettings.h"
 #include "kpphardware.h"
 #include "qgraphicswidget.h"
 #include "kppvisionlist.h"
@@ -27,7 +27,7 @@ public:
         Visible=0x00,
         Hiden=0x01
     };
-    explicit ConfigurationsWidget(QWidget *parent = 0);
+    explicit ConfigurationsWidget(QWidget *parent = 0, VisionSettings *settings=0);
     ~ConfigurationsWidget();
 
     State state() const;
@@ -113,7 +113,7 @@ private:
     ROI* m_SelectedROI;
 
     Request *SelectedRequest() const;
-
+    VisionSettings *m_settings;
 
     void setSelectedROI(ROI *SelectedROI);
 protected:

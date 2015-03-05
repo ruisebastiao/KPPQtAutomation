@@ -16,16 +16,16 @@
 using namespace Vision;
 
 
-class  Settings :public QObject
+class  VisionSettings :public QObject
 {
     Q_OBJECT
 public:
-    explicit Settings(QObject *parent = 0);
+    explicit VisionSettings(QObject *parent = 0, QString settingspath="");
 
-    static Settings *AppSettings;
+    //static VisionSettings *settings;
     static QWidget* mainwidget;
     friend class boost::serialization::access;
-    friend std::ostream & operator<<(std::ostream &os, const Settings &sett);
+    friend std::ostream & operator<<(std::ostream &os, const VisionSettings &sett);
 
 
     QString ProjectsFilePath() const;
