@@ -1,7 +1,6 @@
 #ifndef REQUEST_H
 #define REQUEST_H
 
-#include "kppvisionlist.h"
 #include "inspection.h"
 
 namespace Vision {
@@ -17,7 +16,7 @@ public:
     friend std::ostream & operator<<(std::ostream &os, const Request &req);
 private:
     QString m_Name;
-    KPPVisionList<Inspection> *m_Inspections;
+    SerializableList<Inspection> *m_Inspections;
 
     Vision::Inspection* m_SelectedInspection;
 
@@ -42,7 +41,7 @@ public slots:
 public:
     QString getName();
     void setName(const QString &name);
-    KPPVisionList<Inspection> *Inspections() const;
+    SerializableList<Inspection> *Inspections() const;
 
 
     // QAbstractItemModel interface

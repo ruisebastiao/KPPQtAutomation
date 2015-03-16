@@ -212,3 +212,9 @@ int KPPAdjustableListView::sizeHintForRow(int row) const
 {
     return 50;
 }
+
+
+void KPPAdjustableListView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    QListView::currentChanged(current,previous);
+}

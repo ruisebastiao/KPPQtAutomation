@@ -32,20 +32,20 @@ SOURCES += main.cpp\
     actionbar.cpp \
     menustyle.cpp \
     loginwindow.cpp \
-    applicationsettingswindow.cpp \
-    applicationsettings.cpp
+    applicationsettings.cpp \
+    applicationsettingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     actionbar.h \
     menustyle.h \
     loginwindow.h \
-    applicationsettingswindow.h \
-    applicationsettings.h
+    applicationsettings.h \
+    applicationsettingsdialog.h
 
 
 FORMS    += mainwindow.ui \
-    applicationsettings.ui \
-    loginwindow.ui
+    loginwindow.ui \
+    applicationsettingsdialog.ui
 
 
 

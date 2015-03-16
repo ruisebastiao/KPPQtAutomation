@@ -8,7 +8,7 @@ KPPVision::KPPVision(QObject *parent) :
     QObject(parent)
 {
 
-    m_Requests=new KPPVisionList<Request>(this);
+    m_Requests=new SerializableList<Request>(this);
     m_SelectedRequest=0;
 }
 
@@ -54,7 +54,7 @@ void KPPVision::setName(const QString& name)
 {
     m_Name = name;
 }
-KPPVisionList<Request> *KPPVision::Requests() const
+SerializableList<Request> *KPPVision::Requests() const
 {
     return m_Requests;
 }

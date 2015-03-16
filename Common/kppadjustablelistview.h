@@ -106,6 +106,10 @@ public:
 public:
     bool event(QEvent *);
     void setGrabEnable(bool enable);
+
+    // QAbstractItemView interface
+protected slots:
+    void currentChanged(const QModelIndex &current, const QModelIndex &previous);
 };
 
 #endif // KPPADJUSTABLELISTVIEW_H

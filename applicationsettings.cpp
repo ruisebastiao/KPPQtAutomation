@@ -11,6 +11,8 @@ ApplicationSettings::ApplicationSettings(QObject *parent,QString location) :
     if (m_location=="") {
         m_location=QDir(qApp->applicationDirPath()).filePath("app.cfg");
     }
+
+    m_modules= new SerializableList<ApplicationModule>(this,"Modules");
 }
 
 
@@ -60,7 +62,7 @@ void ApplicationSettings::serialize(Archive & ar, const unsigned int  file_versi
                //ar &   BOOST_SERIALIZATION_NVP(m_Projects);
        // boost::serialization::split_free(ar,QStringSerializable(BOOST_STRINGIZE(m_ProjectsFilePath),&m_ProjectsFilePath), file_version);
 
-
+            ar & boost::serialization::make_nvp("Modules", m_modules);
 
 
     }
@@ -90,6 +92,13 @@ bool ApplicationSettings::Load(){
 bool ApplicationSettings::Save(){
 
     return Save(m_location);
+}
+
+
+SerializableList<ApplicationModule> *ApplicationSettings::Modules()
+{
+
+    return m_modules;
 }
 
 

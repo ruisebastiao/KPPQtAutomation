@@ -7,7 +7,6 @@ SOURCES += \
     $$PWD/SizeGripItem.cpp \
     $$PWD/visiontreewidget.cpp \
     $$PWD/kppstyleditemdelegate.cpp \
-    $$PWD/kppvisionlist.cpp \
     $$PWD/request.cpp \
     $$PWD/ilistviewitem.cpp \
     $$PWD/inspectiontreewidget.cpp \
@@ -22,7 +21,9 @@ SOURCES += \
     $$PWD/imageholder.cpp \
     $$PWD/kppvisionauxfunctions.cpp \
     $$PWD/visionwindow.cpp \
-    $$PWD/visionsettings.cpp
+    $$PWD/visionsettings.cpp \
+    $$PWD/visionmodule.cpp \
+    $$PWD/visionmoduletreewidget.cpp
 
 HEADERS += \
     $$PWD/kppvision.h\
@@ -32,7 +33,6 @@ HEADERS += \
     $$PWD/SizeGripItem.h \
     $$PWD/visiontreewidget.h \
     $$PWD/kppstyleditemdelegate.h \
-    $$PWD/kppvisionlist.h \
     $$PWD/request.h \
     $$PWD/ilistviewitem.h \
     $$PWD/inspectiontreewidget.h \
@@ -48,7 +48,9 @@ HEADERS += \
     $$PWD/imageholder.h \
     $$PWD/kppvisionauxfunctions.h \
     $$PWD/visionwindow.h \
-    $$PWD/visionsettings.h
+    $$PWD/visionsettings.h \
+    $$PWD/visionmodule.h \
+    $$PWD/visionmoduletreewidget.h
 
 
 

@@ -4,14 +4,13 @@
 #include <QObject>
 #include "kppvision.h"
 #include "kpphardware.h"
-#include "kppvisionlist.h"
-
 #include "kppcommon.h"
-
 #include <string>
 #include <fstream>
 #include "BoostDef.h"
 #include "qwidget.h"
+
+#include "serializablelist.h"
 
 using namespace Vision;
 
@@ -34,7 +33,7 @@ public:
     KPPHardware *Hardware() const;
 
 
-    KPPVisionList<KPPVision> *Projects();
+    SerializableList<KPPVision> *Projects();
 
 
 
@@ -52,7 +51,7 @@ private:
     QString m_location;
     QString m_ProjectsFilePath;
     KPPHardware *m_hardware;
-    KPPVisionList<KPPVision> *m_Projects;
+    SerializableList<KPPVision> *m_Projects;
 
 signals:
 

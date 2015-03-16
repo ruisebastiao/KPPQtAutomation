@@ -5,7 +5,7 @@
 #include <QtGui>
 #include <QGraphicsView>
 #include "request.h"
-#include "kppvisionlist.h"
+
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/utility.hpp>
@@ -18,7 +18,7 @@
 #include <string>
 #include <fstream>
 #include "kppcommon.h"
-#include "kppvisionlist.h"
+#include "serializablelist.h"
 #include "BoostDef.h"
 
 namespace Vision
@@ -46,7 +46,7 @@ public:
     friend class boost::serialization::access;
     friend std::ostream & operator<<(std::ostream &os, const KPPVision &vis);
 
-    KPPVisionList<Request> *Requests() const;
+    SerializableList<Request> *Requests() const;
     //void setRequests(KPPVisionList<Request> *Requests);
 
 
@@ -71,7 +71,7 @@ private:
     QGraphicsScene *scene;
     Request* m_SelectedRequest;
     QString m_Name;
-    KPPVisionList<Request> *m_Requests;
+    SerializableList<Request> *m_Requests;
 
 
 signals:

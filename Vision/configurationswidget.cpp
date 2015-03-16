@@ -221,7 +221,7 @@ void ConfigurationsWidget::on_bt_addproj_clicked()
         }
     }
 
-    m_settings->Projects()->AddItem(projectname);
+    m_settings->Projects()->AddItem<KPPVision>(projectname);
 }
 
 void ConfigurationsWidget::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -581,7 +581,7 @@ void ConfigurationsWidget::on_bt_addreq_clicked()
     }
 
 
-    m_SelectedProject->Requests()->AddItem(requestname,m_SelectedProject);
+    m_SelectedProject->Requests()->AddItem<Request>(requestname,m_SelectedProject);
 }
 
 void ConfigurationsWidget::on_bt_removereq_clicked()
@@ -611,7 +611,7 @@ void ConfigurationsWidget::on_bt_addinsp_clicked()
     }
 
 
-    m_SelectedRequest->Inspections()->AddItem(default_inspname,m_SelectedRequest);
+    m_SelectedRequest->Inspections()->AddItem<Inspection>(default_inspname,m_SelectedRequest);
 }
 
 void ConfigurationsWidget::on_bt_removeinsp_clicked()
@@ -641,7 +641,7 @@ void ConfigurationsWidget::on_bt_addroi_clicked()
     }
 
 
-    ROI* roi=m_SelectedInspection->ROIs()->AddItem(default_roiname,m_SelectedInspection);
+    ROI* roi=m_SelectedInspection->ROIs()->AddItem<ROI>(default_roiname,m_SelectedInspection);
     //roi->setScene(m_SelectedInspection->InspectionScene() ,m_SelectedInspection->BackgroundItem());
 }
 

@@ -9,7 +9,7 @@
 #include "visionsettings.h"
 #include "kpphardware.h"
 #include "qgraphicswidget.h"
-#include "kppvisionlist.h"
+#include "serializablelist.h"
 
 using namespace Vision;
 using namespace IDS;

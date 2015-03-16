@@ -6,6 +6,10 @@
 #include <fstream>
 #include "BoostDef.h"
 #include "qwidget.h"
+#include "applicationmodule.h"
+#include "serializablelist.h"
+
+
 
 class  ApplicationSettings :public QObject
 {
@@ -35,7 +39,7 @@ public:
     bool Load();
     bool Save();
 
-
+    SerializableList<ApplicationModule>* Modules();
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned int file_version);
@@ -43,7 +47,7 @@ private:
     QString m_location;
 
 
-
+    SerializableList<ApplicationModule>* m_modules;
 
     UserLevel CurrentUserLevel;
 

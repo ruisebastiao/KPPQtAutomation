@@ -142,7 +142,7 @@
               <enum>QFrame::NoFrame</enum>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>3</number>
              </property>
              <widget class="SlideWidget" name="HardwarePage">
               <property name="sizePolicy">
@@ -703,8 +703,8 @@
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>91</width>
-                       <height>97</height>
+                       <width>706</width>
+                       <height>366</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -864,8 +864,8 @@
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>91</width>
-                          <height>97</height>
+                          <width>672</width>
+                          <height>412</height>
                          </rect>
                         </property>
                         <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1009,8 +1009,8 @@
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>276</width>
-                          <height>96</height>
+                          <width>672</width>
+                          <height>412</height>
                          </rect>
                         </property>
                         <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -1474,21 +1474,21 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>KPPAdjustableListView</class>
+   <extends>QListView</extends>
+   <header location="global">kppadjustablelistview.h</header>
+  </customwidget>
+  <customwidget>
    <class>SlidingStackedWidget</class>
    <extends>QStackedWidget</extends>
-   <header>slidingstackedwidget.h</header>
+   <header location="global">slidingstackedwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SlideWidget</class>
    <extends>QWidget</extends>
-   <header>slidewidget.h</header>
+   <header location="global">slidewidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>KPPAdjustableListView</class>
-   <extends>QListView</extends>
-   <header>kppadjustablelistview.h</header>
   </customwidget>
   <customwidget>
    <class>KPPPushbutton</class>

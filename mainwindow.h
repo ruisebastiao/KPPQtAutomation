@@ -15,13 +15,15 @@
 #include "swipegesturerecognizer.h"
 #include "kppcommon.h"
 #include "loginwindow.h"
-#include "applicationsettingswindow.h"
 #include "applicationsettings.h"
+#include "applicationsettingsdialog.h"
+#include "ui_applicationsettingsdialog.h"
 
 //using namespace Vision;
 
 namespace Ui {
 class MainWindow;
+//class ApplicationSettingsWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -56,7 +58,7 @@ private:
     bool FirstRun;
 
     VisionWindow* visionmodule;
-    ApplicationSettingsWindow *appsettingsWindow=0;
+    ApplicationSettingsDialog *appsettingsDialog=0;
     void SetupSideMenu();
     bool IsLineEdit(const QWidget *widget);
 };

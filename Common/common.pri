@@ -16,7 +16,9 @@ SOURCES +=\
     $$PWD/kppadjustablelistview.cpp \
     $$PWD/crashhandler.cpp \
     $$PWD/crashdialog.cpp \
-    $$PWD/moduleslist.cpp
+    $$PWD/serializablelist.cpp \
+    $$PWD/applicationmodule.cpp \
+    $$PWD/kppactionpushbutton.cpp
 
 
 HEADERS += \
@@ -37,7 +39,9 @@ HEADERS += \
     $$PWD/kppadjustablelistview.h \
     $$PWD/crashhandler.h \
     $$PWD/crashdialog.h \
-    $$PWD/moduleslist.h
+    $$PWD/serializablelist.h \
+    $$PWD/applicationmodule.h \
+    $$PWD/kppactionpushbutton.h
 
 
 

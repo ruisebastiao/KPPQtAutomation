@@ -19,7 +19,7 @@ Inspection::Inspection(QObject *parent):
     m_SelectionRect=0;
 
 
-    m_ROIs=new KPPVisionList<ROI>(this);
+    m_ROIs=new SerializableList<ROI>(this);
     m_SelectedROI=0;
 
     m_view=0;
@@ -122,12 +122,12 @@ void Inspection::UpdateScene(){
 
 
 }
-KPPVisionList<ROI> *Inspection::ROIs() const
+SerializableList<ROI> *Inspection::ROIs() const
 {
     return m_ROIs;
 }
 
-void Inspection::setROIs(KPPVisionList<ROI> *ROIs)
+void Inspection::setROIs(SerializableList<ROI> *ROIs)
 {
     m_ROIs = ROIs;
 }

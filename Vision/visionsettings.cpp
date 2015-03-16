@@ -20,7 +20,7 @@ VisionSettings::VisionSettings(QObject *parent,QString settingspath) :
 
     //settings=this;
     m_hardware= new KPPHardware(this);
-    m_Projects=new KPPVisionList<KPPVision>(this);
+    m_Projects=new SerializableList<KPPVision>(this,"Projects");
 }
 
 QString VisionSettings::ProjectsFilePath() const
@@ -36,7 +36,7 @@ KPPHardware *VisionSettings::Hardware() const
 {
     return m_hardware;
 }
-KPPVisionList<KPPVision> *VisionSettings::Projects()
+SerializableList<KPPVision> *VisionSettings::Projects()
 {
 
     return m_Projects;

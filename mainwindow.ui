@@ -42,7 +42,7 @@
     <item>
      <widget class="QPushButton" name="__bt_selectedmodule_">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="text">
        <string>Nenhum modulo disponivel</string>

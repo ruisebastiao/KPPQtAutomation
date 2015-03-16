@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include "kppadjustablelistview.h"
 #include "kppvision.h"
-#include "kppvisionlist.h"
+#include "serializablelist.h"
 #include "kpptreewidgetitem.h"
 #include "kpptreepushbutton.h"
 #include "requestmenu.h"
@@ -21,7 +21,7 @@ public:
 
 
 
-    void AddVisionProjectsModel(Vision::KPPVisionList<Vision::KPPVision> *VisionProjects);
+    void AddVisionProjectsModel(SerializableList<Vision::KPPVision> *VisionProjects);
 private:
     QTimer *updatelayouttimer;
 

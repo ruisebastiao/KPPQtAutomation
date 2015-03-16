@@ -1,8 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include "QsLog.h"
 #include "QsLogDest.h"
+#include "visionmodule.h"
+
 
 
 ApplicationSettings *MainWindow::applicationSettings=0;
@@ -17,10 +18,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     applicationSettings->Load();
 
+
+    //applicationSettings->Modules()->AddItem(new VisionModule());
+
+    //applicationSettings->Save();
+
     connect(MainWindow::applicationSettings,SIGNAL(UserLevelChanged(UserLevel)),this,SLOT(UserLevelChanged(applicationSettings::UserLevel)));
     UserLevelChanged(ApplicationSettings::Admin);
 
-    appsettingsWindow= new ApplicationSettingsWindow(this);
+     appsettingsDialog= new ApplicationSettingsDialog(this,applicationSettings);
 
 
     //ApplicationSettings->setCurrentUserLevel();
@@ -59,7 +65,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //ui->modulelayout->addWidget(visionmodule);
     //connect(Settings::AppSettings->Projects(),SIGNAL(Loaded(QObject*)),this,SLOT(LoadDone(QObject*)));
 
+    ui->__bt_selectedmodule_->hide();
     QLOG_INFO() << "Application initialization done";
+
+
 }
 
 MainWindow::~MainWindow()
@@ -108,7 +117,8 @@ void MainWindow::MenuActionClicked(QAction *actionmenu)
 
     }
     else if (actionmenu->objectName()=="bt_config") {
-        appsettingsWindow->exec();
+        appsettingsDialog->exec();
+
     }
 
 }

@@ -270,7 +270,7 @@ void VisionTreeWidget::bt_ROIClicked(){
     ROIItem->setExpanded(!ROIItem->isExpanded());
 }
 
-void VisionTreeWidget::AddVisionProjectsModel(KPPVisionList<KPPVision> *VisionProjects){
+void VisionTreeWidget::AddVisionProjectsModel(SerializableList<KPPVision> *VisionProjects){
 
 
     connect(VisionProjects,SIGNAL(dataChanged(QModelIndex,QModelIndex))

@@ -17,6 +17,7 @@ ROI::ROI(QObject *parent) :
         getSizeGripItem()->handleItems()[var]->UpdateRect(rect);
     }
 }
+
 QString ROI::getName() const
 {
     return m_Name;

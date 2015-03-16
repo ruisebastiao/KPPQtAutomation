@@ -156,13 +156,14 @@ void SlidingStackedWidget::slideInNext(int next=-1) {
         // count is inherit from QStackedWidget
         SlideWidget *widg=qobject_cast<SlideWidget*>(widget(now+1));
 
+        if (widg!=0) {
 
-
-        if (widg->Displayed()==false) {
-            slideInNext(now+1);
+            if (widg->Displayed()==false) {
+                slideInNext(now+1);
+            }
+            else
+                slideInIdx(now+1);
         }
-        else
-            slideInIdx(now+1);
     }
 }
 

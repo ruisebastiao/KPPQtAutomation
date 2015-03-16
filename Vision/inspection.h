@@ -3,7 +3,6 @@
 
 
 #include <QObject>
-#include "kppvisionlist.h"
 #include "qdebug.h"
 #include "capturesource.h"
 #include "qgraphicsview.h"
@@ -14,6 +13,7 @@
 #include "kppvisionauxfunctions.h"
 #include "BoostDef.h"
 #include "imageholder.h"
+#include "serializablelist.h"
 
 namespace Vision
 {
@@ -40,8 +40,8 @@ public:
     void setView(QGraphicsView *view);
     QGraphicsView *getView() const;
     void UpdateScene();
-    KPPVisionList<ROI> *ROIs() const;
-    void setROIs(KPPVisionList<ROI> *ROIs);
+    SerializableList<ROI> *ROIs() const;
+    void setROIs(SerializableList<ROI> *ROIs);
 
     KPPGraphicsScene *InspectionScene() const;
 
@@ -82,7 +82,7 @@ private:
 
     CaptureSource *m_capture;
     QString m_Name;
-    KPPVisionList<ROI> *m_ROIs;
+    SerializableList<ROI> *m_ROIs;
 
 
     cv::Mat m_CaptureImage;
