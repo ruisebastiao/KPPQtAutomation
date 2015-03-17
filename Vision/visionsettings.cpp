@@ -10,28 +10,15 @@ using namespace Vision;
 //VisionSettings* VisionSettings::settings=0;
 QWidget* VisionSettings::mainwidget=0;
 
-VisionSettings::VisionSettings(QObject *parent,QString settingspath) :
-    QObject(parent),
-    m_ProjectsFilePath(settingspath)
-{
-    if (settingspath=="") {
-        m_ProjectsFilePath=QDir(qApp->applicationDirPath()).filePath("vision.cfg");
-    }
+VisionSettings::VisionSettings(QObject *parent) :
+    QObject(parent)
+{  
 
-    //settings=this;
     m_hardware= new KPPHardware(this);
     m_Projects=new SerializableList<KPPVision>(this,"Projects");
 }
 
-QString VisionSettings::ProjectsFilePath() const
-{
-    return m_ProjectsFilePath;
-}
 
-void VisionSettings::setProjectsFilePath(const QString &ProjectsFilePath)
-{
-    m_ProjectsFilePath = ProjectsFilePath;
-}
 KPPHardware *VisionSettings::Hardware() const
 {
     return m_hardware;
@@ -48,8 +35,8 @@ SerializableList<KPPVision> *VisionSettings::Projects()
     template<class Archive>
     void VisionSettings::serialize(Archive & ar, const unsigned int  file_version ){
 
-               //ar &   BOOST_SERIALIZATION_NVP(m_Projects);
-        boost::serialization::split_free(ar,QStringSerializable(BOOST_STRINGIZE(m_ProjectsFilePath),&m_ProjectsFilePath), file_version);
+        ar & boost::serialization::make_nvp("Projects",m_Projects);
+        //boost::serialization::split_free(ar,QStringSerializable(BOOST_STRINGIZE(m_ProjectsFilePath),&m_ProjectsFilePath), file_version);
 
 
 

@@ -19,7 +19,7 @@ class  VisionSettings :public QObject
 {
     Q_OBJECT
 public:
-    explicit VisionSettings(QObject *parent = 0, QString settingspath="");
+    explicit VisionSettings(QObject *parent = 0);
 
     //static VisionSettings *settings;
     static QWidget* mainwidget;
@@ -27,8 +27,7 @@ public:
     friend std::ostream & operator<<(std::ostream &os, const VisionSettings &sett);
 
 
-    QString ProjectsFilePath() const;
-    void setProjectsFilePath(const QString &ProjectsFilePath);
+
 
     KPPHardware *Hardware() const;
 
@@ -49,7 +48,6 @@ public:
     void serialize(Archive &ar, const unsigned int file_version);
 private:
     QString m_location;
-    QString m_ProjectsFilePath;
     KPPHardware *m_hardware;
     SerializableList<KPPVision> *m_Projects;
 

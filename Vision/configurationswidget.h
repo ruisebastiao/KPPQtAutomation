@@ -48,7 +48,7 @@ private slots:
     void animationFinished();
     void on_bt_exit_clicked();
 
-    void on_bt_select_clicked();
+
 
     void on_bt_save_settings_clicked();
 

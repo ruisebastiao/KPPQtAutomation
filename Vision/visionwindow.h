@@ -16,7 +16,7 @@ class VisionWindow : public QFrame
     Q_OBJECT
 
 public:
-    explicit VisionWindow(QWidget *parent = 0);
+    explicit VisionWindow(QWidget *parent = 0, QLayout *modulelayout=0, VisionSettings *settings=0);
     ~VisionWindow();
     void toogleModuleSettings();
 
@@ -29,8 +29,9 @@ private slots:
 
 private:
     Ui::VisionWindow *ui;
-    VisionSettings *settings;
+    VisionSettings* m_visionsettings;
     ConfigurationsWidget *configs;
+    QLayout *m_modulelayout;
     KPPVision *vision;
 };
 

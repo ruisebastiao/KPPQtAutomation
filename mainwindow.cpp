@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     applicationSettings->Load();
 
+    connect(applicationSettings->Modules(),SIGNAL(rowsInserted(QModelIndex,int,int)),this,SLOT(ModuleAdded(QModelIndex , int , int )));
 
     //applicationSettings->Modules()->AddItem(new VisionModule());
 
@@ -59,13 +60,20 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(actionBar,SIGNAL(ActionButtonClicked(QToolButton*)),SLOT(ActionButtonClicked(QToolButton*)));
     connect(actionBar,SIGNAL(ActionMenuClicked(QAction*)),SLOT(MenuActionClicked(QAction*)));
 
-    ui->actionlayout->addWidget(actionBar);
+    ui->actionlayout->addWidget(actionBar);   
 
-    //visionmodule= new VisionWindow(this);
+    if(applicationSettings->Modules()->getList().count()>0){
+    for (int var = 0; var < applicationSettings->Modules()->getList().count(); ++var) {
+      // QString modulename=applicationSettings->Modules()->getList().at(0)->getName();
+       applicationSettings->Modules()->getList().at(var)->InitializeModule(ui->modules_stack,ui->__modules_tab);
+
+    }
+     applicationSettings->Modules()->getList().at(0)->SetActivated();
+    }
     //ui->modulelayout->addWidget(visionmodule);
     //connect(Settings::AppSettings->Projects(),SIGNAL(Loaded(QObject*)),this,SLOT(LoadDone(QObject*)));
 
-    ui->__bt_selectedmodule_->hide();
+
     QLOG_INFO() << "Application initialization done";
 
 
@@ -84,6 +92,14 @@ void MainWindow::LoadDone(QObject* Sender){
 //        ui->treeWidget->AddVisionProjectsModel(Settings::AppSettings->Projects());
 //    }
 
+}
+
+void MainWindow::ModuleAdded(QModelIndex model, int poss, int pose)
+{
+  ApplicationModule*newmodule= model.data(Qt::UserRole).value<ApplicationModule*>();
+  if(newmodule!=0){
+    newmodule->InitializeModule(ui->modules_stack,ui->__modules_tab);
+  }
 }
 
 

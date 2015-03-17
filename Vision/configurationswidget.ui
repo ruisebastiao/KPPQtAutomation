@@ -142,7 +142,7 @@
               <enum>QFrame::NoFrame</enum>
              </property>
              <property name="currentIndex">
-              <number>3</number>
+              <number>1</number>
              </property>
              <widget class="SlideWidget" name="HardwarePage">
               <property name="sizePolicy">
@@ -561,44 +561,6 @@
                      <property name="bottomMargin">
                       <number>2</number>
                      </property>
-                     <item>
-                      <widget class="QGroupBox" name="groupbox_nobackcolor1">
-                       <property name="title">
-                        <string>Path</string>
-                       </property>
-                       <layout class="QVBoxLayout" name="verticalLayout_6">
-                        <property name="spacing">
-                         <number>3</number>
-                        </property>
-                        <property name="leftMargin">
-                         <number>3</number>
-                        </property>
-                        <property name="topMargin">
-                         <number>3</number>
-                        </property>
-                        <property name="rightMargin">
-                         <number>3</number>
-                        </property>
-                        <property name="bottomMargin">
-                         <number>3</number>
-                        </property>
-                        <item>
-                         <layout class="QHBoxLayout" name="horizontalLayout">
-                          <item>
-                           <widget class="QLineEdit" name="edit_projsloc"/>
-                          </item>
-                          <item>
-                           <widget class="QPushButton" name="bt_select">
-                            <property name="text">
-                             <string>Select</string>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
                     </layout>
                    </widget>
                   </item>
@@ -704,7 +666,7 @@
                        <x>0</x>
                        <y>0</y>
                        <width>706</width>
-                       <height>366</height>
+                       <height>412</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1474,11 +1436,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KPPAdjustableListView</class>
-   <extends>QListView</extends>
-   <header location="global">kppadjustablelistview.h</header>
-  </customwidget>
-  <customwidget>
    <class>SlidingStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header location="global">slidingstackedwidget.h</header>
@@ -1491,9 +1448,14 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>KPPAdjustableListView</class>
+   <extends>QListView</extends>
+   <header location="global">kppadjustablelistview.h</header>
+  </customwidget>
+  <customwidget>
    <class>KPPPushbutton</class>
    <extends>QPushButton</extends>
-   <header>kpppushbutton.h</header>
+   <header location="global">kpppushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KPPFrame</class>

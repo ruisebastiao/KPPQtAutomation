@@ -46,6 +46,7 @@ private slots:
 
     void LoadDone(QObject *Sender);
 
+    void ModuleAdded(QModelIndex model,int poss,int pose);
 
 public slots:
     void focusChanged(QWidget* old, QWidget* now);
@@ -57,7 +58,7 @@ private:
 
     bool FirstRun;
 
-    VisionWindow* visionmodule;
+
     ApplicationSettingsDialog *appsettingsDialog=0;
     void SetupSideMenu();
     bool IsLineEdit(const QWidget *widget);

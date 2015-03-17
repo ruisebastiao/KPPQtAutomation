@@ -125,6 +125,7 @@ public:
 
         endInsertRows();
 
+       // emit ItemAdded(item);
 
         return item;
     }
@@ -153,6 +154,8 @@ public:
         beginInsertRows(idx, pos, pos);
 
         endInsertRows();
+
+      //  emit ItemAdded(item);
 
     }
 
@@ -317,6 +320,8 @@ private:
 
 signals:
     //void Loaded(QObject*);
+    //void ItemAdded(T* Item);
+
 public slots:
 
 

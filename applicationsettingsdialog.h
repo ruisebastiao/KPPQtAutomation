@@ -27,6 +27,8 @@ private slots:
 
     void on___bt_addmodule_clicked();
     void MenuActionButtonTriggered();
+    void on___bt_ModuleSettingsPath_clicked();
+
 private:
     Ui::ApplicationSettingsDialog *ui;
     ApplicationSettings* m_appsettings;
@@ -34,6 +36,7 @@ private:
     // QWidget interface
 public slots:
     void setVisible(bool visible);
+
 };
 
 #endif // APPLICATIONSETTINGSDIALOG_H

@@ -178,7 +178,7 @@ QPushButton:hover{
 
 QPushButton:disabled {
         background: transparent #e5e9ee;
-        padding-top: 2px;        
+        padding-top: 2px;
         padding-left: 3px;
         color: black;
 }

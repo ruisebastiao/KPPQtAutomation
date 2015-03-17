@@ -12,14 +12,12 @@
     (c::e)(c::staticMetaObject.enumerator(c::staticMetaObject.indexOfEnumerator(#e)).keyToValue(s.toUtf8()))
 
 
+class Common{
+public:
 
-
-
-
-
-
-
-
+    template <class DstType, class SrcType>
+    static bool IsType(const SrcType* src);
+};
 
 class  QStringSerializable{
 

@@ -1,17 +1,19 @@
 #include "kpppushbutton.h"
 #include "QResizeEvent"
 #include "QApplication"
-
+#include "QThread"
 //#include "qabstractanimation.h"
 
-KPPPushbutton::KPPPushbutton(QWidget *parent) :
-    QPushButton(parent)
+KPPPushbutton::KPPPushbutton(QWidget *parent) :    
+    QPushButton(parent),
+    isSelected(false)
+
 {
     ishover=false;
     defaultSize=0;
     m_visible=false;
-    setVisible(true);
-
+  //  setVisible(true);
+    setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed);
     this->setStyleSheet("QPushButton {\
                                 border: 1px solid #6593cf;\
                                 border-radius: 2px;\
@@ -33,10 +35,9 @@ KPPPushbutton::KPPPushbutton(QWidget *parent) :
                                 padding-left: 3px;\
                         }\
                         QPushButton:on {\
-                                background: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 :   1, stop :   0.0 #5AA72D,\
-                                stop :   0.5 #B3E296, stop :   0.55 #B3E296, stop :   1.0 #f5f9ff);\
-                                padding-top: 2px;\
-                                padding-left: 3px;\
+                                    border: 1px solid #6593cf;\
+                                    background: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 :   1, stop :   0.0 #BDD2AE,\
+                                    stop :   0.5 #E0F3D2, stop :   0.55 #E0F3D2, stop :   1.0 #BDD2AE);\
                         }\
                         QPushButton:disabled {\
                                 background: transparent #e5e9ee;\
@@ -48,30 +49,65 @@ KPPPushbutton::KPPPushbutton(QWidget *parent) :
 
 }
 
+KPPPushbutton::~KPPPushbutton()
+{
+    setVisible(false);
+    //QThread::sleep(300);
+}
+
+/*
+                                background: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 :   1, stop :   0.0 #5AA72D,\
+                                stop :   0.5 #B3E296, stop :   0.55 #B3E296, stop :   1.0 #f5f9ff);\
+                                padding-top: 2px;\
+                                padding-left: 3px;\
+*/
+
 void KPPPushbutton::paintEvent (QPaintEvent *)
 {
 
 
-    QStyleOptionButton option;
-     option.init(this);
+   // QStyleOptionButton option;
+   //  option.init(this);
 
 
-     if(isDown()){
-        option.state |= QStyle::State_Sunken;
-     }
-     else{
-         // option.state =QStyle::State_Off|QStyle::State_Raised;
-     }
+
+     //QPainter painter(this);
+
+     //paintEvent(QPaintEvent *paint)
+       //  {
+              QStyleOption opt;
+              opt.init(this);
+              QPainter p(this);
+
+              if(isDown()){
+                 opt.state |= QStyle::State_Sunken;
+              }
+              else{
+                  // option.state =QStyle::State_Off|QStyle::State_Raised;
+              }
 
 
-     if (isDefault())
-         option.features |= QStyleOptionButton::DefaultButton;
-     option.text = text();
-     option.icon = icon();
+              if (isSelected)
+                  opt.state|= QStyle::State_On;
+              else
+                  opt.state|= QStyle::State_Off;
+              //option.text = text();
+              //option.icon = icon();
 
-     QPainter painter(this);
 
-     style()->drawControl(QStyle::CE_PushButton, &option, &painter, this);
+             //Draw the base
+              style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+             //Draw the text
+              style()->drawItemText(&p,this->rect(),Qt::AlignCenter,(this->palette()), true, this->text());
+
+              if(!this->icon().isNull())
+                 //Draw the icon at 75% button height
+                 style()->drawItemPixmap(&p, this->rect(),Qt::AlignLeft|Qt::AlignVCenter, this->icon().pixmap(this->rect().height()  * 0.75));
+
+         //}
+
+     //style()->drawControl(QStyle::CE_PushButton, &option, &painter, this);
 
 }
 
@@ -84,7 +120,7 @@ void KPPPushbutton::setVisible(bool visible)
 
 
     if(defaultSize==0){
-        defaultSize= 400;//parentWidget()->geometry().size().width();
+        defaultSize= 2000;//parentWidget()->geometry().size().width();
     }
     //bool teste=isHidden();
     int start=0;
@@ -114,6 +150,12 @@ void KPPPushbutton::setVisible(bool visible)
 
  //   QPushButton::setVisible(visible);
 
+}
+
+void KPPPushbutton::setSelected(bool selected)
+{
+    this->isSelected=selected;
+    this->repaint();
 }
 
 void KPPPushbutton::AnimationFinished(){

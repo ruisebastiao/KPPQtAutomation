@@ -17,6 +17,8 @@
         <file alias="autom">icons/autom.png</file>
         <file alias="kppautom">icons/64x64.png</file>
         <file alias="config">icons/config.png</file>
+        <file alias="vision">icons/3D-Blu-Ray-256.png</file>
+        <file alias="camera">icons/Camera-icon.png</file>
     </qresource>
     <qresource prefix="/">
         <file>styles/style_dark.qss</file>

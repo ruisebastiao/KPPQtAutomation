@@ -2,15 +2,20 @@
 #define VISIONMODULE_H
 
 #include <applicationmodule.h>
+#include "visionwindow.h"
+
 
 class VisionModule : public ApplicationModule
 {
 public:
-    VisionModule(QObject *parent = 0);
+    VisionModule(QObject *parent = 0, QString moduleSettingsLoc="");
     ~VisionModule();
     friend class boost::serialization::access;
     friend std::ostream & operator<<(std::ostream &os, const VisionModule &module);
 
+    void InitializeModule(SlidingStackedWidget *modules_widget, QLayout *tabslayout);
+    QString getModuleSettingsPath() const;
+    void setModuleSettingsPath(const QString &getModuleSettingsPath);
 
 private :
     template<class Archive>
@@ -18,13 +23,15 @@ private :
     {
 
         ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(ApplicationModule);
-        boost::serialization::split_free(ar,QStringSerializable(BOOST_STRINGIZE(m_Name),&m_Name), file_version);
+        //boost::serialization::split_free(ar,QStringSerializable(BOOST_STRINGIZE(m_Name),&m_Name), file_version);
 
-        //ar & boost::serialization::make_nvp("m_ROIRect", m_ROIRect);
+        //ar & boost::serialization::make_nvp("VisionSettings",settings);
 
     }
+    VisionWindow* m_visionmoduleUI;
+    VisionSettings *m_settings;
 
-    QString m_Name;
+    void ReloadConfigurations();
 };
 
 #endif // VISIONMODULE_H

@@ -35,7 +35,7 @@ ConfigurationsWidget::ConfigurationsWidget(QWidget *parent, VisionSettings *sett
     hide();
 
 
-    ui->edit_projsloc->setText(settings->ProjectsFilePath());
+
     ui->list_projects->connect(ui->list_projects,SIGNAL(selectionChangedSignal(QItemSelection,QItemSelection)),this,SLOT(selectionChanged(QItemSelection,QItemSelection)));
     ui->list_projects->setModel(settings->Projects());
     ui->ProjectsPage->setDisplayed(true);
@@ -174,30 +174,13 @@ void ConfigurationsWidget::on_bt_exit_clicked()
 }
 
 
-void ConfigurationsWidget::on_bt_select_clicked()
-{
-    QFileDialog *d=new QFileDialog(this,Qt::Dialog);
-    // d->setLocale(QLocale(QLocale::Portuguese, QLocale::Portugal));
-    //d->createWindowContainer()
-    //LookIn, FileName, FileType, Accept, Reject
-    d->setLabelText( QFileDialog::Reject, tr("Cancel"));
-    d->setLabelText( QFileDialog::LookIn, tr("Look In"));
-    d->setFileMode(QFileDialog::AnyFile);
-    d->setDefaultSuffix("qprj");
-    d->setNameFilter(tr("Projects file (*.qprj)"));
-    if(d->exec()){
-        ui->edit_projsloc->setText(d->selectedFiles().at(0));
-    }
-}
+
 
 void ConfigurationsWidget::on_bt_save_settings_clicked()
 {
-    m_settings->setProjectsFilePath(ui->edit_projsloc->text());
 
     m_settings->Save();
-
-
-    m_settings->Projects()->Save();
+    //m_settings->Projects()->Save();
 
 
     //    ui->frame_5->layout()->addWidget(ui->stackedWidget);

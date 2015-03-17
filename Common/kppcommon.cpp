@@ -28,3 +28,9 @@ std::string QStringSerializable::getQStringName() const
 
 
 }
+
+template <class DstType, class SrcType>
+bool Common::IsType(const SrcType *src)
+{
+       return dynamic_cast<const DstType*>(src) != 0;
+}

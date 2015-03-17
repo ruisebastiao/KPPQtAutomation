@@ -1,20 +1,14 @@
 #include "visionwindow.h"
 #include "ui_visionwindow.h"
 
-VisionWindow::VisionWindow(QWidget *parent) :
+VisionWindow::VisionWindow(QWidget *parent, QLayout *modulelayout,VisionSettings *settings) :
     QFrame(parent),
+    m_modulelayout(modulelayout),
+    m_visionsettings(settings),
     ui(new Ui::VisionWindow)
 {
     ui->setupUi(this);
 
-    settings=new VisionSettings(this);
-    if(!(settings->Load(qApp->applicationDirPath().append("/settings.cfg")))){
-        settings->Save();
-    }
-
-    if(!settings->Projects()->Load(settings->ProjectsFilePath())){
-        settings->Projects()->Save();
-    }
 
     ui->treeWidget->AddVisionProjectsModel(settings->Projects());
 
@@ -60,6 +54,10 @@ VisionWindow::VisionWindow(QWidget *parent) :
     icon.addFile(QStringLiteral(":/icons/next"), QSize(), QIcon::Normal, QIcon::Off);
     icon.addFile(QStringLiteral(":/icons/prev"), QSize(), QIcon::Active, QIcon::On);
     ui->bt_toogleSideMenu->setIcon(icon);
+
+    if(m_modulelayout!=0){
+        m_modulelayout->addWidget(this);
+    }
 }
 
 VisionWindow::~VisionWindow()

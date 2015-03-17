@@ -3,6 +3,8 @@
 #include <QMenu>
 #include <QWidgetAction>
 #include "kppactionpushbutton.h"
+#include "qfiledialog.h"
+#include "qmessagebox.h"
 
 ApplicationSettingsDialog::ApplicationSettingsDialog(QWidget *parent, ApplicationSettings *appsettings) :
     QDialog(parent),
@@ -14,6 +16,7 @@ ApplicationSettingsDialog::ApplicationSettingsDialog(QWidget *parent, Applicatio
     if (appsettings!=0) {
         ui->__list_modules->setModel(m_appsettings->Modules());
     }
+
 
     ui->__page_modules->setDisplayed(true);
     ui->__page_moduleSettings->setDisplayed(false);
@@ -75,9 +78,13 @@ void ApplicationSettingsDialog::selectionChanged(const QItemSelection &selected,
     QModelIndexList selectedlist= ui->__list_modules->selectionModel()->selectedRows();
 
     if (selectedlist.count()>0) {
-        ui->__bt_removemodule->setVisible(true);
-        ui->__lbl_modulename->setText(selectedlist.at(0).data().value<QString>());
-        ui->__page_moduleSettings->setDisplayed(true);
+        ApplicationModule* module=selectedlist.at(0).data(Qt::UserRole).value<ApplicationModule*>();
+        if(module!=0){
+            ui->__bt_removemodule->setVisible(true);
+            ui->__lbl_modulename->setText(module->getName());
+            ui->__edit_ModuleSettingsPath->setText(module->getModuleSettingsPath());
+            ui->__page_moduleSettings->setDisplayed(true);
+        }
 
     }
     else{
@@ -122,5 +129,40 @@ void ApplicationSettingsDialog::setVisible(bool visible)
     }
 
     QDialog::setVisible(visible);
+
+}
+
+
+
+void ApplicationSettingsDialog::on___bt_ModuleSettingsPath_clicked()
+{
+    QModelIndexList selectedlist= ui->__list_modules->selectionModel()->selectedRows();
+
+    if (selectedlist.count()>0) {
+        ui->__bt_removemodule->setVisible(true);
+        ApplicationModule* module=selectedlist.at(0).data(Qt::UserRole).value<ApplicationModule*>();
+        if(module!=0){
+
+            QFileDialog *d=new QFileDialog(0,Qt::Dialog);
+
+            d->setLabelText( QFileDialog::Reject, tr("Cancelar"));
+            d->setLabelText( QFileDialog::LookIn, tr("Ver"));
+            d->setFileMode(QFileDialog::AnyFile);
+            d->setDefaultSuffix("Module");
+            d->setNameFilter(tr("Ficheiros Module (*.Module)"));
+            if(d->exec()){
+                QString path=d->selectedFiles().at(0);
+                ui->__edit_ModuleSettingsPath->setText(path);
+                module->setModuleSettingsPath(path);
+
+            }
+        }
+
+
+    }
+
+
+
+
 
 }

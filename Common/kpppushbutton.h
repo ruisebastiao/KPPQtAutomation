@@ -14,14 +14,15 @@ class  KPPPushbutton : public QPushButton
     Q_OBJECT
 public:
     explicit KPPPushbutton(QWidget *parent = 0);
-
+    ~KPPPushbutton();
     virtual void paintEvent(QPaintEvent *);
     void	setVisible ( bool visible );
 
-
+    void setSelected(bool selected=true);
 private:
     bool ishover,resizing,m_visible;
     int defaultSize;
+    bool isSelected;
     QPropertyAnimation *animation1;
 signals:
 
