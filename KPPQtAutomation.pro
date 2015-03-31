@@ -19,13 +19,15 @@ INCLUDEPATH +=$$PWD/../ExternalLibs/QsLog
 
 DEFINES += QSLOG_IS_SHARED_LIBRARY_IMPORT
 
-LIBS += -L$$PWD/../ExternalLibs/QsLog/build-QsLogShared
+
 win32 {
+    LIBS += -L$$PWD/../ExternalLibs/QsLog/build-QsLogShared
     LIBS += -lQsLog2
 } else {
     LIBS += -lQsLog
 }
 
+DEFINES += QS_LOG_LINE_NUMBERS
 
 SOURCES += main.cpp\
         mainwindow.cpp \

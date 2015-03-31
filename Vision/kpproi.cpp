@@ -1,4 +1,5 @@
 #include "kpproi.h"
+#include "QsLog.h"
 
 using namespace Vision;
 using namespace cv;
@@ -75,30 +76,36 @@ void ROI::Process()
 
 void ROI::Process(Mat processingImage)
 {
-    if(!processingImage.empty())
-        m_ProcessingImage=processingImage;
+    try {
 
-    roi_x=mapRectToParent(rect()).x();
-    roi_y=mapRectToParent(rect()).y();
-    roi_w=mapRectToParent(rect()).width();
-    roi_h=mapRectToParent(rect()).height();
-    Rect rect2=Rect(roi_x,roi_y,roi_w,roi_h);
+        if(!processingImage.empty())
+            m_ProcessingImage=processingImage;
 
-    Mat roiImage=m_ProcessingImage(rect2);
-    Mat roiImagegray;
-    cvtColor(roiImage,roiImagegray,CV_BGR2GRAY);
+        roi_x=mapRectToParent(rect()).x();
+        roi_y=mapRectToParent(rect()).y();
+        roi_w=mapRectToParent(rect()).width();
+        roi_h=mapRectToParent(rect()).height();
+        Rect rect2=Rect(roi_x,roi_y,roi_w,roi_h);
 
-    threshold(roiImagegray,roiImagegray,85,255,cv::THRESH_BINARY);
+        Mat roiImage=m_ProcessingImage(rect2);
+        Mat roiImagegray;
+        cvtColor(roiImage,roiImagegray,CV_BGR2GRAY);
 
-    std::vector<Mat> channels;
-    channels.push_back(roiImagegray);
-    channels.push_back(roiImagegray);
-    channels.push_back(roiImagegray);
+        threshold(roiImagegray,roiImagegray,85,255,cv::THRESH_BINARY);
 
-    merge(channels,roiImage);
-    QRectF temp=rect();
-    //temp.adjust(,2,2,2);
-    parentItem()->update(parentItem()->boundingRect());
+        std::vector<Mat> channels;
+        channels.push_back(roiImagegray);
+        channels.push_back(roiImagegray);
+        channels.push_back(roiImagegray);
+
+        merge(channels,roiImage);
+        QRectF temp=rect();
+        //temp.adjust(,2,2,2);
+        parentItem()->update(parentItem()->boundingRect());
+
+    } catch (cv::Exception& e ) {
+        QLOG_ERROR() << "ROI processing error - "<<e.what();
+    }
     //parentItem()->update(mapRectToParent(temp));
 }
 

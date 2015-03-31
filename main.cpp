@@ -74,6 +74,7 @@ int main(int argc, char *argv[])
 
     // 1. init the logging mechanism
     Logger& logger = Logger::instance();
+
     logger.setLoggingLevel(QsLogging::TraceLevel);
     const QString sLogPath(QDir(a.applicationDirPath()).filePath("log.txt"));
 
@@ -86,8 +87,8 @@ int main(int argc, char *argv[])
     logger.addDestination(fileDestination);
     logger.addDestination(functorDestination);
 
-    QLOG_INFO() << "_______________________________";
-    QLOG_INFO() << "Program started";
+    QLOG_INFO() << "|_______________________________";
+    QLOG_INFO() << "|Program started";
 
 
     QTranslator qtTranslator;

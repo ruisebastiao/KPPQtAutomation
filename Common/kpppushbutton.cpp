@@ -179,6 +179,8 @@ void KPPPushButton::AddSubMenu(QString Text,QString Name)
 
     }
 
+    m_menu->setMaximumHeight(50);
+
     QWidgetAction *new_action= new QWidgetAction(m_menu);
     KPPActionPushButton* action_widgetbt = new KPPActionPushButton(this,m_menu);
     action_widgetbt->setText(Text);
@@ -281,7 +283,9 @@ bool KPPPushButton::OnSwipeGesture(QSwipeGesture *pSwipe)
         }
         else if(pSwipe->verticalDirection() == QSwipeGesture::Down ){
             if((swipeangle>=240 && swipeangle<280)){
+                m_menu->setParent(this);
                 setMenu(m_menu);
+                update();
                 click();
                 setMenu(0);
             }
@@ -291,36 +295,3 @@ bool KPPPushButton::OnSwipeGesture(QSwipeGesture *pSwipe)
     return true;
 }
 
-
-
-
-
-
-void KPPPushButton::showEvent(QShowEvent *)
-{
-    if(m_visible){
-
-    }
-}
-
-
-void KPPPushButton::mousePressEvent(QMouseEvent *e)
-{
-//    switch (m_MenuActivationFlags) {
-
-//    case None:
-
-//        break;
-//    case Click:
-
-//        break;
-//    case Gesture:
-
-//        break;
-//    default:
-//        break;
-//    }
-//    e->setAccepted(false);
-    QPushButton::mousePressEvent(e);
-
-}

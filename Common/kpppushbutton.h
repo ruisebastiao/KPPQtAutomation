@@ -61,13 +61,7 @@ private:
     bool OnGestureEvent(QGestureEvent* pEvent);
     bool OnSwipeGesture(QSwipeGesture* pSwipe);
 
-    // QWidget interface
-protected:
-    void showEvent(QShowEvent *);
 
-    // QWidget interface
-protected:
-    void mousePressEvent(QMouseEvent *);
 };
 
 

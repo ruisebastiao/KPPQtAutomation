@@ -90,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect(Settings::AppSettings->Projects(),SIGNAL(Loaded(QObject*)),this,SLOT(LoadDone(QObject*)));
 
 
-    QLOG_INFO() << "Application initialization done";
+    QLOG_INFO() << "|Application initialization done";
 
 
 }
