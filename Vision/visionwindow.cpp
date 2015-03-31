@@ -15,13 +15,14 @@ VisionWindow::VisionWindow(QWidget *parent, QLayout *modulelayout,VisionSettings
     //Settings::AppSettings->Projects()->AddItem("asd");
 
 
-    configs= new ConfigurationsWidget (this,settings);
+    m_configwindow= new ConfigurationsWidget (this,settings);
 
 
+    ui->treeWidget->setVisionSettings(settings);
 
     connect(ui->treeWidget,SIGNAL(ListSelectionChanged(QObject*)),this,SLOT(VisionTreeListSelectionChanged(QObject*)));
 
-    VisionSettings::mainwidget=this;
+    settings->setMainWidget(this);
 
 
     foreach (KPPVision *project, settings->Projects()->getList()) {
@@ -67,7 +68,7 @@ VisionWindow::~VisionWindow()
 
 void VisionWindow::toogleModuleSettings()
 {
- configs->ToogleState();
+ m_configwindow->ToogleState();
 }
 
 
@@ -75,13 +76,13 @@ void VisionWindow::toogleModuleSettings()
 void VisionWindow::VisionTreeListSelectionChanged(QObject* newselection){
     if (dynamic_cast<KPPVision*>(newselection)) {
 
-        configs->setSelectedProject(dynamic_cast<KPPVision*>(newselection));
+        m_configwindow->setSelectedProject(dynamic_cast<KPPVision*>(newselection));
     }
     else if (dynamic_cast<Request*>(newselection)) {
-        configs->setSelectedRequest(dynamic_cast<Request*>(newselection));
+        m_configwindow->setSelectedRequest(dynamic_cast<Request*>(newselection));
     }
     else if (dynamic_cast<Inspection*>(newselection)) {
-        configs->setSelectedInspection(dynamic_cast<Inspection*>(newselection));
+        m_configwindow->setSelectedInspection(dynamic_cast<Inspection*>(newselection));
     }
 }
 
@@ -105,3 +106,12 @@ void VisionWindow::on_bt_toogleSideMenu_clicked(bool checked)
         ui->sideWidget->setMenuState(SideWidget::Closed);
     }
 }
+
+void VisionWindow::setConfigwindowVisible(bool visible)
+{
+    if(visible)
+        m_configwindow->show();
+    else
+        m_configwindow->hide();
+}
+

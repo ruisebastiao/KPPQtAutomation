@@ -10,11 +10,13 @@ VisionModule::VisionModule(QObject *parent,QString moduleSettingsLoc):
 ApplicationModule(parent)
 {
     m_settings=0;
+    m_visionmoduleUI=0;
 }
 
 VisionModule::~VisionModule()
 {
-
+    delete m_visionmoduleUI;
+    delete m_settings;
 }
 
 void VisionModule::InitializeModule(SlidingStackedWidget *modules_widget, QLayout *tabslayout)
@@ -29,8 +31,10 @@ void VisionModule::InitializeModule(SlidingStackedWidget *modules_widget, QLayou
 
     ReloadConfigurations();
 
-    if(m_settings!=0)
+    if(m_settings!=0){
         m_visionmoduleUI= new VisionWindow(modules_widget,module_page->layout(),m_settings);
+        //m_visionmoduleUI->
+    }
 
 
 
@@ -52,6 +56,23 @@ void VisionModule::setModuleSettingsPath(const QString &ModuleSettingsPath)
 
 }
 
+void VisionModule::setConfigWindowVisible(bool visible)
+{
+    if(m_visionmoduleUI!=0){
+        m_visionmoduleUI->setConfigwindowVisible(visible);
+    }
+}
+VisionSettings *VisionModule::Settings() const
+{
+    return m_settings;
+}
+
+void VisionModule::setSettings(VisionSettings *settings)
+{
+    m_settings = settings;
+}
+
+
 void VisionModule::ReloadConfigurations()
 {
     QString path=ApplicationModule::getModuleSettingsPath();
@@ -59,14 +80,14 @@ void VisionModule::ReloadConfigurations()
         delete m_settings;
         m_settings=0;
     }
-    m_settings=new VisionSettings(this);
+
 
 
     if(QFile(path).exists()==false){
 
           if (QMessageBox(QMessageBox::Question,"Ficheiro não existente!","Criar um novo?",QMessageBox::Yes|QMessageBox::No).exec()== QMessageBox::Yes) {
 
-
+                m_settings=new VisionSettings(this);
 
                m_settings->Save(path);
 
@@ -76,7 +97,9 @@ void VisionModule::ReloadConfigurations()
 
           }
     }
-    else
+    else{
+        m_settings=new VisionSettings(this);
         m_settings->Load(path);
+    }
 }
 

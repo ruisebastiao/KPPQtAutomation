@@ -2,6 +2,7 @@
 #define SLIDEWIDGET_H
 
 #include <QWidget>
+#include <QGesture>
 
 class  SlideWidget : public QWidget
 {
@@ -17,6 +18,14 @@ private:
 signals:
 
 public slots:
+
+protected:
+    bool event(QEvent *event);
+
+
+private:
+    bool OnGestureEvent(QGestureEvent* pEvent);
+    bool OnSwipeGesture(QSwipeGesture* pSwipe);
 
 };
 

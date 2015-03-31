@@ -3,6 +3,8 @@
 #include <slidewidget.h>
 #include <QDebug>
 
+#include "QsLog.h"
+
 SlidingStackedWidget::SlidingStackedWidget(QWidget *parent)
     : QStackedWidget(parent)
 {
@@ -30,10 +32,10 @@ SlidingStackedWidget::SlidingStackedWidget(QWidget *parent)
     m_pnow=QPoint(0,0);
     m_active=false;
     //installEventFilter(this);
-    grabGesture(Qt::SwipeGesture);
 
-    QGestureRecognizer* pRecognizer = new SwipeGestureRecognizer();
-    grabGesture(QGestureRecognizer::registerRecognizer(pRecognizer));
+
+    grabGesture(Qt::SwipeGesture,Qt::ReceivePartialGestures|Qt::IgnoredGesturesPropagateToParent);
+
 
     //this->currentChanged();
 }
@@ -43,10 +45,11 @@ bool
 SlidingStackedWidget::OnSwipeGesture(QSwipeGesture* pSwipe)
 {
     // Do something as result of the gesture
-    if (pSwipe->state() == Qt::GestureFinished) {
+    Qt::GestureState state=pSwipe->state();
+    if (state == Qt::GestureFinished) {
 
         qreal  swipeangle=pSwipe->swipeAngle();
-        qDebug()<<"Angle:"<<pSwipe->swipeAngle();
+
         if (pSwipe->horizontalDirection() == QSwipeGesture::Left &&
                 (swipeangle>150 && swipeangle<210)){
             //goPrevImage();
@@ -70,56 +73,21 @@ SlidingStackedWidget::OnSwipeGesture(QSwipeGesture* pSwipe)
 bool
 SlidingStackedWidget::OnGestureEvent(QGestureEvent* pEvent)
 {
-    QGesture *pSwipe = pEvent->gesture(Qt::SwipeGesture);
-    if (pSwipe != NULL) {
-        return OnSwipeGesture(static_cast<QSwipeGesture*>(pSwipe));
+
+    if ( QGesture *pSwipe = pEvent->gesture(Qt::SwipeGesture)) {
+        OnSwipeGesture(static_cast<QSwipeGesture*>(pSwipe));
     } else {
-        qDebug("Unexpected gesture detected. We only grab Qt::SwipeGesture ");
-        return QWidget::event(pEvent);
+        qDebug("Unexpected gesture detected. We only grab Qt::SwipeGesture ");        
     }
+
+    return true;
 }
-
-//QString EnumSocketTypeToString(int value)
-//{
-//    QMetaObject obj = QChildEvent::staticMetaObject;
-//    QMetaEnum en = obj.enumerator(0);
-//    return QLatin1String(en.valueToKey(value));
-//}
-
-//bool SlidingStackedWidget::eventFilter( QObject* target, QEvent* e)
-//{
-//    switch (e->type())
-//    {
-//    case QEvent::ChildAdded:
-//        {
-//            QChildEvent* ce = (QChildEvent*)e;
-//            ce->child()->installEventFilter(this);
-//        }
-//        break;
-
-//    case QEvent::ChildRemoved:
-//        {
-//            QChildEvent* ce = (QChildEvent*)e;
-//            ce->child()->removeEventFilter(this);
-//        }
-//        break;
-//    }
-
-//    return QWidget::eventFilter(target, e);
-//}
-
-//void SlidingStackedWidget::childEvent(QChildEvent *event){
-//   // qDebug()<<"Child :"<<event->child()->objectName();
-//    //qDebug()<<"Child event:"<<EnumSocketTypeToString(event->type());
-
-//}
-
 
 
 bool SlidingStackedWidget::event(QEvent *event)
 {
-    if (event->type() == QEvent::Gesture ||event->type() == QEvent::GestureOverride) {
-        return OnGestureEvent(static_cast<QGestureEvent*>(event));
+    if (event->type() == QEvent::Gesture) {
+      return OnGestureEvent(static_cast<QGestureEvent*>(event));
     }
 
     return QWidget::event(event);

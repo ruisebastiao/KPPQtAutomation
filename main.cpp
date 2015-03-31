@@ -61,11 +61,13 @@ int main(int argc, char *argv[])
 
 
     // Adiciona callback para erros indefinidos
-    SetUnhandledExceptionFilter(windows_exception_handler);
-
+    SetUnhandledExceptionFilter(windows_exception_handler);    
 
     QApplication a(argc, argv);
 
+
+    a.setAttribute(Qt::AA_SynthesizeTouchForUnhandledMouseEvents,true);
+    a.setAttribute(Qt::AA_SynthesizeMouseForUnhandledTouchEvents,true);
    // setupLogger();
 
     using namespace QsLogging;

@@ -4,7 +4,6 @@ SOURCES +=\
     $$PWD/kppeditbox.cpp \
     $$PWD/kppframe.cpp \
     $$PWD/kppgestureframe.cpp \
-    $$PWD/kpppushbutton.cpp \
     $$PWD/slidewidget.cpp \
     $$PWD/SlidingStackedWidget.cpp \
     $$PWD/kppadjustablelistview.cpp \
@@ -18,7 +17,8 @@ SOURCES +=\
     $$PWD/crashdialog.cpp \
     $$PWD/serializablelist.cpp \
     $$PWD/applicationmodule.cpp \
-    $$PWD/kppactionpushbutton.cpp
+    $$PWD/kppactionpushbutton.cpp \
+    $$PWD/kpppushbutton.cpp
 
 
 HEADERS += \
@@ -27,7 +27,6 @@ HEADERS += \
     $$PWD/kppeditbox.h \
     $$PWD/kppframe.h \
     $$PWD/kppgestureframe.h \
-    $$PWD/kpppushbutton.h \
     $$PWD/slidewidget.h \
     $$PWD/SlidingStackedWidget.h \
     $$PWD/kppadjustablelistview.h \
@@ -41,7 +40,8 @@ HEADERS += \
     $$PWD/crashdialog.h \
     $$PWD/serializablelist.h \
     $$PWD/applicationmodule.h \
-    $$PWD/kppactionpushbutton.h
+    $$PWD/kppactionpushbutton.h \
+    $$PWD/kpppushbutton.h
 
 
 

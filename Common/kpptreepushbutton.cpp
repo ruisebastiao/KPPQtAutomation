@@ -20,6 +20,8 @@ void KPPRootTreePushButton::setText(const QString &text)
     QPushButton::setText(text);
     setObjectName(text);
 }
+
+
 QTreeWidgetItem *KPPRootTreePushButton::widgetItem() const
 {
     return m_widgetItem;

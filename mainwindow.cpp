@@ -3,6 +3,7 @@
 #include "QsLog.h"
 #include "QsLogDest.h"
 #include "visionmodule.h"
+#include <QTouchDevice>
 
 
 
@@ -13,7 +14,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
+
     QLOG_INFO() << "Loading application settings";
+    QList<const QTouchDevice *> touchdevices=QTouchDevice::devices();
+
+    if(touchdevices.count()==0){
+       QLOG_INFO() << "No touch devices found. Enabling mouse support...";
+       QGestureRecognizer* pRecognizer = new SwipeGestureRecognizer();
+       grabGesture(QGestureRecognizer::registerRecognizer(pRecognizer));
+    }
+    else{
+        setAttribute(Qt::WA_AcceptTouchEvents );
+        grabGesture(Qt::SwipeGesture);
+    }
+
     MainWindow::applicationSettings= new ApplicationSettings();
 
     applicationSettings->Load();
@@ -49,8 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    actionBar->addButton(new QAction(QIcon(":/icons/settings"),tr("Configurations"),this));
-    actionBar->addButton(new QAction(QIcon(":/icons/cancel"),tr("Exit"),this));
+    //actionBar->addButton(new QAction(QIcon(":/icons/settings"),tr("Configurations"),this));
+    actionBar->addButton(new QAction(QIcon(":/icons/cancel"),tr("Sair"),this));
     //    actionBar->addButton(new QAction(QIcon(":/icons/chat"),tr("Chat"),this));
     //    actionBar->addButton(new QAction(QIcon(":/icons/email"),tr("Email"),this));
     //    actionBar->addButton(new QAction(QIcon(":/icons/bad"),tr("Bad"),this));
@@ -111,7 +127,7 @@ void MainWindow::ActionButtonClicked(QToolButton *buttonClicked)
        // visionmodule->toogleModuleSettings();
 
     }
-    else if (buttonClicked->text()==tr("Exit")) {
+    else if (buttonClicked->text()==tr("Sair")) {
         this->close();
     }
 }

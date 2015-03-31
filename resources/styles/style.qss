@@ -120,6 +120,14 @@ QLineEdit:hover {
 }
 
 
+QToolButton {
+        border: 1px solid #6593cf;
+        border-radius: 2px;
+        padding: 5px 15px 2px 5px;
+        color: #006aff;
+}
+
+
 QToolButton:hover {
         background: qlineargradient(x1 : 1, y1 : 1, x2 : 1, y2 :   1, stop :   0.0 #ffd9aa,
                 stop :   0.5 #ffbb6e, stop :   0.55 #feae42, stop :   1.0 #fedb74);

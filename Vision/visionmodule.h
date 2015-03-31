@@ -17,6 +17,11 @@ public:
     QString getModuleSettingsPath() const;
     void setModuleSettingsPath(const QString &getModuleSettingsPath);
 
+    void setConfigWindowVisible(bool visible=true);
+
+    VisionSettings *Settings() const;
+    void setSettings(VisionSettings *Settings);
+
 private :
     template<class Archive>
     void serialize(Archive &ar, const unsigned int file_version)

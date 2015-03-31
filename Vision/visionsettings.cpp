@@ -7,13 +7,11 @@
 
 using namespace Vision;
 
-//VisionSettings* VisionSettings::settings=0;
-QWidget* VisionSettings::mainwidget=0;
 
-VisionSettings::VisionSettings(QObject *parent) :
+VisionSettings::VisionSettings(QObject *parent,QWidget *MainWidget) :
     QObject(parent)
 {  
-
+    setMainWidget(MainWidget);
     m_hardware= new KPPHardware(this);
     m_Projects=new SerializableList<KPPVision>(this,"Projects");
 }
@@ -69,15 +67,25 @@ bool VisionSettings::Save(){
 
     return Save(m_location);
 }
+QWidget *VisionSettings::MainWidget() const
+{
+    return m_MainWidget;
+}
+
+void VisionSettings::setMainWidget(QWidget *MainWidget)
+{
+    m_MainWidget = MainWidget;
+}
+
 
 
 bool VisionSettings::Load(QString location){
-
-
+    
+    
     try{
         m_location=location;
-
-
+        
+        
         std::ifstream ifs(location.toUtf8().data());
         if(!ifs.good()){
 

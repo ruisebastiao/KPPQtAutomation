@@ -20,10 +20,11 @@ void ApplicationModule::InitializeModule(SlidingStackedWidget *modules_widget, Q
 {
     m_moduleswidget=modules_widget;
 
-    m_TabButton= new KPPPushbutton(modules_widget->parentWidget());
-
+    m_TabButton= new KPPPushButton(modules_widget->parentWidget());
+    m_TabButton->grabGesture(Qt::SwipeGesture);
     m_TabButton->setCheckable(true);
     m_TabButton->setText(m_Name);
+
     tabslayout->addWidget(m_TabButton);
     module_page = new SlideWidget();
     module_page->setDisplayed(true);
@@ -33,7 +34,9 @@ void ApplicationModule::InitializeModule(SlidingStackedWidget *modules_widget, Q
     verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
     module_page->setObjectName(this->m_Name);
     modules_widget->addWidget(module_page);
-
+    m_TabButton->AddSubMenu("Configurações","m_configuracoes");
+    m_TabButton->setMenuActivation(KPPPushButton::Gesture);
+    connect(m_TabButton,SIGNAL(SubMenuClicked(QObject*)),this,SLOT(MenuActionButtonTriggered(QObject*)));
     connect(m_TabButton,SIGNAL(clicked()),this,SLOT(TabButtonClicked()));
     connect(m_moduleswidget,SIGNAL(currentChanged(int)),this,SLOT(ModulesIndexChanged(int)));
 }
@@ -89,6 +92,11 @@ void ApplicationModule::setModuleSettingsPath(const QString &ModuleSettingsPath)
 
 }
 
+void ApplicationModule::setConfigWindowVisible(bool visible)
+{
+
+}
+
 
 void ApplicationModule::TabButtonClicked()
 {
@@ -104,4 +112,17 @@ void ApplicationModule::ModulesIndexChanged(int moduleindex)
     else
         m_TabButton->setSelected(false);
 
+}
+
+void ApplicationModule::MenuActionButtonTriggered(QObject *sender)
+{
+    if(sender!=0){
+       // QAction *sender_action=(QAction*)sender;
+        //if(sender_action!=0){
+
+            if(sender->objectName()=="m_configuracoes"){
+                setConfigWindowVisible(true);
+            }
+       // }
+    }
 }

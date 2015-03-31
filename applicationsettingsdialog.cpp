@@ -24,32 +24,35 @@ ApplicationSettingsDialog::ApplicationSettingsDialog(QWidget *parent, Applicatio
 
     connect(ui->__list_modules,SIGNAL(selectionChangedSignal(QItemSelection,QItemSelection)),this,SLOT(selectionChanged(QItemSelection,QItemSelection)));
 
-   // ui->__bt_addmodule->setPopupMode(QToolButton::InstantPopup);
-
-    QMenu* menu=new QMenu(ui->__bt_addmodule);
-
-    menu->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 
 
-    QWidgetAction *act_visaomodule= new QWidgetAction(menu);
+//    QMenu* menu=new QMenu(ui->__bt_addmodule);
+
+//    menu->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 
 
-    KPPActionPushButton* addmoduleaction = new KPPActionPushButton(ui->__bt_addmodule,menu);
-
-    addmoduleaction->setText("Modulo de Visão");
-    act_visaomodule->setDefaultWidget(addmoduleaction);
-
-     QList<QAction*> *menu_actions= new QList<QAction*>();
-     menu_actions->append(act_visaomodule);
-     menu->addActions(*menu_actions);
-
-     addmoduleaction->setObjectName("bt_addvisionmodule");
+//    QWidgetAction *act_visaomodule= new QWidgetAction(menu);
 
 
-     QWidget::connect(addmoduleaction, SIGNAL(clicked()), this, SLOT(MenuActionButtonTriggered()));
+//    KPPActionPushButton* addmoduleaction = new KPPActionPushButton(ui->__bt_addmodule,menu);
+
+//    addmoduleaction->setText("Modulo de Visão");
+//    act_visaomodule->setDefaultWidget(addmoduleaction);
+
+//     QList<QAction*> *menu_actions= new QList<QAction*>();
+//     menu_actions->append(act_visaomodule);
+//     menu->addActions(*menu_actions);
+
+//     addmoduleaction->setObjectName("bt_addvisionmodule");
+
+    ui->__bt_addmodule->AddSubMenu("Modulo de Visão","bt_addvisionmodule");
+
+    ui->__bt_addmodule->setMenuActivation(KPPPushButton::Click);
+
+     QWidget::connect( ui->__bt_addmodule, SIGNAL(SubMenuClicked(QObject*)), this, SLOT(MenuActionButtonTriggered(QObject *)));
 
 
-    ui->__bt_addmodule->setMenu(menu);
+
     ui->__bt_removemodule->setVisible(false);
 }
 
@@ -107,9 +110,9 @@ void ApplicationSettingsDialog::on___bt_addmodule_clicked()
     //m_appsettings->Modules()->AddItem()
 }
 
-void ApplicationSettingsDialog::MenuActionButtonTriggered()
+void ApplicationSettingsDialog::MenuActionButtonTriggered(QObject *sender)
 {
-    QObject* sender=QObject::sender();
+
     if(sender!=0){
        // QAction *sender_action=(QAction*)sender;
         //if(sender_action!=0){

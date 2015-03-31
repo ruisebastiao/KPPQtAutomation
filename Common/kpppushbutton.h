@@ -6,29 +6,43 @@
 #include "qpropertyanimation.h"
 #include "qstyleoption.h"
 #include "qpainter.h"
+#include <QGesture>
+#include <qtoolbutton.h>
+#include "kppactionpushbutton.h"
 
-
-
-class  KPPPushbutton : public QPushButton
+class  KPPPushButton : public QPushButton
 {    
     Q_OBJECT
+    Q_ENUMS(MenuActivationFlag)
+
 public:
-    explicit KPPPushbutton(QWidget *parent = 0);
-    ~KPPPushbutton();
+    enum MenuActivationFlag {
+        Click=0x00,
+        Gesture=0x01,
+        None=0x02
+    };
+
+    explicit KPPPushButton(QWidget *parent = 0);
+    ~KPPPushButton();
     virtual void paintEvent(QPaintEvent *);
     void	setVisible ( bool visible );
-
+    //void AddGestures(Qt::GestureType type);
     void setSelected(bool selected=true);
+    void AddSubMenu(QString Text, QString Name);
+    void setMenuActivation(KPPPushButton::MenuActivationFlag ActivationFlags);
+
 private:
+    MenuActivationFlag m_MenuActivationFlags;
     bool ishover,resizing,m_visible;
     int defaultSize;
     bool isSelected;
     QPropertyAnimation *animation1;
+    QMenu* m_menu;
 signals:
-
+    void SubMenuClicked(QObject* MenuClicked);
 private slots:
 
-
+    void SubMenuClickedSlot();
     void AnimationFinished();
 
 public slots:
@@ -40,14 +54,20 @@ protected:
     void enterEvent(QEvent *);
     void leaveEvent(QEvent *);
 
+    bool event(QEvent *event);
 
-    // QAbstractButton interface
-protected:
 
+private:
+    bool OnGestureEvent(QGestureEvent* pEvent);
+    bool OnSwipeGesture(QSwipeGesture* pSwipe);
 
     // QWidget interface
 protected:
     void showEvent(QShowEvent *);
+
+    // QWidget interface
+protected:
+    void mousePressEvent(QMouseEvent *);
 };
 
 

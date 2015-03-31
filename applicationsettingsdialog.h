@@ -26,7 +26,7 @@ private slots:
     void on___bt_removemodule_clicked();
 
     void on___bt_addmodule_clicked();
-    void MenuActionButtonTriggered();
+    void MenuActionButtonTriggered(QObject *sender=0);
     void on___bt_ModuleSettingsPath_clicked();
 
 private:

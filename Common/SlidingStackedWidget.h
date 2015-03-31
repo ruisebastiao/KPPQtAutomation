@@ -82,8 +82,7 @@ protected:
 
         QList<QWidget*> blockedPageList;
         bool event(QEvent *event);
-        //void childEvent(QChildEvent *event);
-        //bool eventFilter(QObject *, QEvent *);
+
 
 private:
         bool OnGestureEvent(QGestureEvent* pEvent);

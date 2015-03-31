@@ -13,9 +13,10 @@
 using namespace Vision;
 
 
-VisionTreeWidget::VisionTreeWidget(QWidget *parent) :
+VisionTreeWidget::VisionTreeWidget(QWidget *parent, VisionSettings *visionsettings) :
     QTreeWidget(parent)
 {
+    setVisionSettings(visionsettings);
     setRootIsDecorated(false);
     setHeaderHidden(true);
     setIndentation(0);
@@ -158,12 +159,12 @@ void VisionTreeWidget::ListItemPressed(QModelIndex e)
 
     if(sender()->objectName()==list_Requests->objectName()){
         QRect wt=list_Requests->visualRect(e);
-        QRect mappedrect=QRect(list_Requests->mapTo(parentWidget,wt.topLeft()),list_Requests->mapTo(VisionSettings::mainwidget,wt.bottomRight()));
+        QRect mappedrect=QRect(list_Requests->mapTo(parentWidget,wt.topLeft()),list_Requests->mapTo(m_VisionSettings->MainWidget(),wt.bottomRight()));
         m_requestmenu->setAlignmentRect(mappedrect);
     }
     else if(sender()->objectName()==list_Inspections->objectName()){
         QRect wt=list_Inspections->visualRect(e);
-        QRect mappedrect=QRect(list_Inspections->mapTo(parentWidget,wt.topLeft()),list_Inspections->mapTo(VisionSettings::mainwidget,wt.bottomRight()));
+        QRect mappedrect=QRect(list_Inspections->mapTo(parentWidget,wt.topLeft()),list_Inspections->mapTo(m_VisionSettings->MainWidget(),wt.bottomRight()));
         m_inspectionmenu->setAlignmentRect(mappedrect);
     }
 
@@ -496,6 +497,16 @@ void VisionTreeWidget::AddVisionProjectsModel(SerializableList<KPPVision> *Visio
 
 
 }
+VisionSettings *VisionTreeWidget::getVisionSettings() const
+{
+    return m_VisionSettings;
+}
+
+void VisionTreeWidget::setVisionSettings(VisionSettings *visionsettings)
+{
+    m_VisionSettings = visionsettings;
+}
+
 
 /*
  *

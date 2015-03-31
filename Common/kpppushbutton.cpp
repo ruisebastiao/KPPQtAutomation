@@ -2,11 +2,16 @@
 #include "QResizeEvent"
 #include "QApplication"
 #include "QThread"
-//#include "qabstractanimation.h"
+#include "qdebug.h"
+#include "qwidgetaction.h"
+#include "qaction.h"
 
-KPPPushbutton::KPPPushbutton(QWidget *parent) :    
+
+KPPPushButton::KPPPushButton(QWidget *parent) :
     QPushButton(parent),
-    isSelected(false)
+    isSelected(false),
+    m_menu(0),
+    m_MenuActivationFlags(KPPPushButton::None)
 
 {
     ishover=false;
@@ -47,9 +52,14 @@ KPPPushbutton::KPPPushbutton(QWidget *parent) :
                         }\
                         ");
 
+
+
+
+             //addmoduleaction->setObjectName("bt_addvisionmodule");
+
 }
 
-KPPPushbutton::~KPPPushbutton()
+KPPPushButton::~KPPPushButton()
 {
     setVisible(false);
     //QThread::sleep(300);
@@ -62,7 +72,7 @@ KPPPushbutton::~KPPPushbutton()
                                 padding-left: 3px;\
 */
 
-void KPPPushbutton::paintEvent (QPaintEvent *)
+void KPPPushButton::paintEvent (QPaintEvent *)
 {
 
 
@@ -112,7 +122,7 @@ void KPPPushbutton::paintEvent (QPaintEvent *)
 }
 
 
-void KPPPushbutton::setVisible(bool visible)
+void KPPPushButton::setVisible(bool visible)
 {
     if(visible==m_visible) return;
     m_visible=visible;
@@ -152,28 +162,133 @@ void KPPPushbutton::setVisible(bool visible)
 
 }
 
-void KPPPushbutton::setSelected(bool selected)
+
+
+void KPPPushButton::setSelected(bool selected)
 {
     this->isSelected=selected;
     this->repaint();
 }
 
-void KPPPushbutton::AnimationFinished(){
+void KPPPushButton::AddSubMenu(QString Text,QString Name)
+{
+
+    if(m_menu==0){
+        m_menu=new QMenu(this);
+        m_menu->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+
+    }
+
+    QWidgetAction *new_action= new QWidgetAction(m_menu);
+    KPPActionPushButton* action_widgetbt = new KPPActionPushButton(this,m_menu);
+    action_widgetbt->setText(Text);
+    new_action->setDefaultWidget(action_widgetbt);
+
+     QList<QAction*> *menu_actions= new QList<QAction*>();
+     menu_actions->append(new_action);
+     m_menu->addActions(*menu_actions);
+
+
+     action_widgetbt->setObjectName(Name);
+     connect( action_widgetbt, SIGNAL(clicked()), this, SLOT(SubMenuClickedSlot()));
+
+}
+
+void KPPPushButton::setMenuActivation(KPPPushButton::MenuActivationFlag ActivationFlags)
+{
+    m_MenuActivationFlags=ActivationFlags;
+    switch (m_MenuActivationFlags) {
+
+    case None:
+        ungrabGesture(Qt::SwipeGesture);
+        setMenu(0);
+        break;
+    case Click:
+        setMenu(m_menu);
+        break;
+    case Gesture:
+        grabGesture(Qt::SwipeGesture);
+
+        break;
+    default:
+        break;
+    }
+
+
+
+}
+
+void KPPPushButton::SubMenuClickedSlot()
+{
+    QObject* sender=QObject::sender();
+    emit SubMenuClicked(sender);
+}
+
+void KPPPushButton::AnimationFinished(){
     QPushButton::setVisible(m_visible);
     parentWidget()->update();
 }
 
 
-void KPPPushbutton::enterEvent(QEvent *e)
+void KPPPushButton::enterEvent(QEvent *e)
 {
     ishover=true;
     QPushButton::enterEvent(e);
 }
 
-void KPPPushbutton::leaveEvent(QEvent *e)
+void KPPPushButton::leaveEvent(QEvent *e)
 {
     ishover=false;
     QPushButton::leaveEvent(e);
+}
+
+bool KPPPushButton::event(QEvent *event)
+{
+    if (event->type() == QEvent::Gesture) {
+      return OnGestureEvent(static_cast<QGestureEvent*>(event));
+    }
+
+    return QPushButton::event(event);
+}
+
+bool KPPPushButton::OnGestureEvent(QGestureEvent *pEvent)
+{
+    if ( QGesture *pSwipe = pEvent->gesture(Qt::SwipeGesture)) {
+        OnSwipeGesture(static_cast<QSwipeGesture*>(pSwipe));
+    } else {
+        qDebug("Unexpected gesture detected. We only grab Qt::SwipeGesture ");
+    }
+
+    return true;
+}
+
+bool KPPPushButton::OnSwipeGesture(QSwipeGesture *pSwipe)
+{
+    // Do something as result of the gesture
+    Qt::GestureState state=pSwipe->state();
+    if (state == Qt::GestureFinished) {
+
+        qreal  swipeangle=pSwipe->swipeAngle();
+        qDebug()<<"Angle:"<<pSwipe->swipeAngle();
+        if (pSwipe->horizontalDirection() == QSwipeGesture::Left &&
+                (swipeangle>150 && swipeangle<210)){
+
+
+        }
+        else if(pSwipe->horizontalDirection() == QSwipeGesture::Right &&
+                ( (swipeangle>=0 && swipeangle<15) || (swipeangle>300 && swipeangle<=360))){
+
+        }
+        else if(pSwipe->verticalDirection() == QSwipeGesture::Down ){
+            if((swipeangle>=240 && swipeangle<280)){
+                setMenu(m_menu);
+                click();
+                setMenu(0);
+            }
+        }
+
+    }
+    return true;
 }
 
 
@@ -181,9 +296,31 @@ void KPPPushbutton::leaveEvent(QEvent *e)
 
 
 
-void KPPPushbutton::showEvent(QShowEvent *)
+void KPPPushButton::showEvent(QShowEvent *)
 {
     if(m_visible){
 
     }
+}
+
+
+void KPPPushButton::mousePressEvent(QMouseEvent *e)
+{
+//    switch (m_MenuActivationFlags) {
+
+//    case None:
+
+//        break;
+//    case Click:
+
+//        break;
+//    case Gesture:
+
+//        break;
+//    default:
+//        break;
+//    }
+//    e->setAccepted(false);
+    QPushButton::mousePressEvent(e);
+
 }

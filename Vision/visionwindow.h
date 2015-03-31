@@ -20,6 +20,9 @@ public:
     ~VisionWindow();
     void toogleModuleSettings();
 
+
+    void setConfigwindowVisible(bool visible=true);
+
 private slots:
     void VisionTreeListSelectionChanged(QObject *newselection);
     void InspectionInserted(QModelIndex index, int start, int end);
@@ -30,7 +33,7 @@ private slots:
 private:
     Ui::VisionWindow *ui;
     VisionSettings* m_visionsettings;
-    ConfigurationsWidget *configs;
+    ConfigurationsWidget *m_configwindow;
     QLayout *m_modulelayout;
     KPPVision *vision;
 };

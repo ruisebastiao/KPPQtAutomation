@@ -29,7 +29,7 @@ public:
 
     virtual QString getModuleSettingsPath() const;
     virtual void setModuleSettingsPath(const QString &getModuleSettingsPath);
-
+    virtual void setConfigWindowVisible(bool visible=true);
 private:
 
     template<class Archive>
@@ -47,13 +47,14 @@ protected:
      SlidingStackedWidget *m_moduleswidget;
      QString m_Name;
      QString m_ModuleSettingsPath;
-     KPPPushbutton *m_TabButton;
+     KPPPushButton *m_TabButton;
      SlideWidget* module_page;
 signals:
 
 private slots:
      void TabButtonClicked();
      void ModulesIndexChanged(int moduleindex);
+     void MenuActionButtonTriggered(QObject *sender=0);
 public slots:
 };
 

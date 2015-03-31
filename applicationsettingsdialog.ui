@@ -60,7 +60,7 @@
          <enum>QFrame::Box</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="SlideWidget" name="__page_modules">
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -102,29 +102,20 @@
              <enum>QLayout::SetDefaultConstraint</enum>
             </property>
             <item>
-             <widget class="QToolButton" name="__bt_addmodule">
+             <widget class="KPPPushButton" name="__bt_addmodule">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>40</height>
-               </size>
-              </property>
               <property name="text">
                <string>Adicionar modulo</string>
-              </property>
-              <property name="popupMode">
-               <enum>QToolButton::InstantPopup</enum>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="KPPPushbutton" name="__bt_removemodule">
+             <widget class="KPPPushButton" name="__bt_removemodule">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -303,9 +294,9 @@
    <header location="global">kppadjustablelistview.h</header>
   </customwidget>
   <customwidget>
-   <class>KPPPushbutton</class>
+   <class>KPPPushButton</class>
    <extends>QPushButton</extends>
-   <header location="global">kpppushbutton.h</header>
+   <header>kpppushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -11,18 +11,25 @@
 #include "kpptreepushbutton.h"
 #include "requestmenu.h"
 #include "inspectionmenu.h"
+#include "visionsettings.h"
 
 class  VisionTreeWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    explicit VisionTreeWidget(QWidget *parent = 0);
+    explicit VisionTreeWidget(QWidget *parent = 0,VisionSettings* visionsettings=0);
 
 
 
 
     void AddVisionProjectsModel(SerializableList<Vision::KPPVision> *VisionProjects);
+    VisionSettings *getVisionSettings() const;
+    void setVisionSettings(VisionSettings *visionsettings);
+
 private:
+
+    VisionSettings* m_VisionSettings;
+
     QTimer *updatelayouttimer;
 
     QTreeWidgetItem *Projectsitem;

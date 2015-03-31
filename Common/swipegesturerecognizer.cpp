@@ -76,7 +76,12 @@ SwipeGestureRecognizer::recognize(QGesture* pGesture, QObject *pWatched, QEvent 
     }
         break;
     case QEvent::MouseButtonRelease: {
+
         QMouseEvent* pMouseEvent = static_cast<QMouseEvent*>(pEvent);
+        if(pMouseEvent->modifiers().testFlag(Qt::ControlModifier)){
+        //if ((pMouseEvent->sstate() & Qt::ControlModifier) != 0){
+            return QGestureRecognizer::CancelGesture;
+        }
         const QVariant& propValue = pSwipe->property("startPoint");
         QPointF startPoint = propValue.toPointF();
         QPointF endPoint = pMouseEvent->pos();
