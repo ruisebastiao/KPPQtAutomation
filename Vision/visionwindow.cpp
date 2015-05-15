@@ -27,10 +27,7 @@ VisionWindow::VisionWindow(QWidget *parent, QLayout *modulelayout,VisionSettings
 
     foreach (KPPVision *project, settings->Projects()->getList()) {
         foreach (Request *request, project->Requests()->getList()) {
-            connect(request->Inspections(),SIGNAL(rowsInserted(QModelIndex,int,int)),this,SLOT(InspectionInserted(QModelIndex,int,int)));
-            foreach (Inspection *inspection, request->Inspections()->getList()) {
-                inspection->setView(ui->graphicsView);
-            }
+           request->setView(ui->graphicsView);
 
         }
     }
@@ -86,14 +83,7 @@ void VisionWindow::VisionTreeListSelectionChanged(QObject* newselection){
     }
 }
 
-void VisionWindow::InspectionInserted(QModelIndex index, int start, int end)
-{
 
-
-    Inspection* insp=index.data(Qt::UserRole).value<Inspection*>();
-    if(insp!=0)
-        insp->setView(ui->graphicsView);
-}
 
 void VisionWindow::on_bt_toogleSideMenu_clicked(bool checked)
 {

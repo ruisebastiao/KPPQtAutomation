@@ -24,10 +24,7 @@ public:
     void setConfigwindowVisible(bool visible=true);
 
 private slots:
-    void VisionTreeListSelectionChanged(QObject *newselection);
-    void InspectionInserted(QModelIndex index, int start, int end);
-
-
+    void VisionTreeListSelectionChanged(QObject *newselection); 
     void on_bt_toogleSideMenu_clicked(bool checked);
 
 private:

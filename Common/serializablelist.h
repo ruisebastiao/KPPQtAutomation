@@ -111,6 +111,8 @@ public:
             }
         }
 
+
+
         item =new U();
         item->setName(name);
 
@@ -120,8 +122,8 @@ public:
         m_InnerList.append((T*)item);
 
         QModelIndex idx=index(pos,0);
-
         beginInsertRows(idx, pos, pos);
+
 
         endInsertRows();
 

@@ -8,8 +8,37 @@ Request::Request(QObject *parent) :
 {
    // this->setObjectName("Request");
     m_Inspections=new SerializableList<Inspection>(this);
+
+    connect(m_Inspections,SIGNAL(rowsInserted(QModelIndex,int,int)),this,SLOT(InspectionInserted(QModelIndex,int,int)));
+
     m_SelectedInspection=0;
 }
+QGraphicsView *Request::getView() const
+{
+    return m_view;
+}
+
+void Request::setView(QGraphicsView *view)
+{
+    m_view = view;
+
+    foreach (Inspection *inspection, m_Inspections->getList()) {
+        inspection->setView(view);
+    }
+
+
+}
+
+void Request::InspectionInserted(QModelIndex index, int start, int end)
+{
+
+
+    Inspection* insp=index.data(Qt::UserRole).value<Inspection*>();
+    if(insp!=0)
+        insp->setView(m_view);
+}
+
+
 Vision::Inspection *Request::SelectedInspection() const
 {
     return m_SelectedInspection;

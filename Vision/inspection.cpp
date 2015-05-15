@@ -24,6 +24,9 @@ Inspection::Inspection(QObject *parent):
 
     m_view=0;
 
+    connect(m_ROIs,SIGNAL(rowsInserted(QModelIndex,int,int)),this,SLOT(ROIInserted(QModelIndex,int,int)));
+
+
     m_BackgroundItem=m_InspectionScene->addPixmap(QPixmap());
     //m_ImageHolder=new ImageHolder();
     //m_InspectionScene->addItem(m_ImageHolder);
@@ -163,6 +166,14 @@ bool Inspection::CaptureImage(){
 
 
     return true;
+}
+
+void Inspection::ROIInserted(QModelIndex index, int start, int end)
+{
+
+    ROI* roi=index.data(Qt::UserRole).value<ROI*>();
+    if(roi!=0)
+        roi->setScene(m_InspectionScene,m_BackgroundItem);
 }
 
 

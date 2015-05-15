@@ -17,7 +17,7 @@ public:
 private:
     QString m_Name;
     SerializableList<Inspection> *m_Inspections;
-
+    QGraphicsView* m_view;
     Vision::Inspection* m_SelectedInspection;
 
 
@@ -34,7 +34,7 @@ signals:
 
 public slots:
 
-
+    void InspectionInserted(QModelIndex index, int start, int end);
 
 
     // IVisionListItem interface
@@ -53,6 +53,8 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     Vision::Inspection *SelectedInspection() const;
     void setSelectedInspection(Vision::Inspection *SelectedInspection);
+    QGraphicsView *getView() const;
+    void setView(QGraphicsView *view);
 };
 }
 #endif // REQUEST_H

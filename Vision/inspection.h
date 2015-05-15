@@ -37,8 +37,10 @@ public:
     void setCapture(CaptureSource *capture);
 
     void Process(bool capture=true, bool process=true);
-    void setView(QGraphicsView *view);
+
+    void setView(QGraphicsView *view);    
     QGraphicsView *getView() const;
+
     void UpdateScene();
     SerializableList<ROI> *ROIs() const;
     void setROIs(SerializableList<ROI> *ROIs);
@@ -99,7 +101,7 @@ public slots:
 
 
 private slots:
-   // void SceneSelectionChanged();
+   void ROIInserted(QModelIndex index, int start, int end);
 };
 
 }
